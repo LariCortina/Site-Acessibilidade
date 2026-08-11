@@ -1,1189 +1,734 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="text-[18px] md:text-[20px]">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atalho+ - Acessibilidade para Idosos</title>
-    <!-- Fontes e ícones -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>Facilita Brasil - Ajudando você na Internet</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        br: {
+                            green: '#009c3b',
+                            yellow: '#ffdf00',
+                            blue: '#002776',
+                            dark: '#1a1a1a',
+                            light: '#f4f4f5'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* Reset e variáveis */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg: #ffffff;
-            --text: #000000;
-            --verde: #009739;
-            --amarelo: #FFD700;
-            --azul: #0033A0;
-            --preto: #000000;
-            --branco: #ffffff;
-            --cinza-claro: #f0f0f0;
-            --sombra: rgba(0, 0, 0, 0.1);
-            --fonte-padrao: 18px;
-            --fonte-base: 18px;
-            --borda: 2px solid var(--verde);
-            --transicao: 0.3s ease;
-        }
-
         body {
-            font-family: 'Inter', Arial, sans-serif;
-            font-size: var(--fonte-base);
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
             transition: background-color 0.3s, color 0.3s;
-            padding: 0 20px;
         }
 
-        body.modo-escuro {
-            --bg: #1a1a1a;
-            --text: #f0f0f0;
-            --cinza-claro: #2a2a2a;
-            --sombra: rgba(255, 255, 255, 0.1);
+        /* Focus acessível de alto contraste */
+        *:focus-visible {
+            outline: 4px solid #ffdf00 !important;
+            outline-offset: 4px !important;
+            border-radius: 4px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 10px;
+        /* Classes ativadas pelo menu de acessibilidade */
+        .large-targets button, 
+        .large-targets a, 
+        .large-targets input,
+        .large-targets select {
+            padding-top: 1.25rem !important;
+            padding-bottom: 1.25rem !important;
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
+            margin: 0.5rem 0 !important;
+            min-height: 60px !important;
+            font-size: 110% !important;
         }
 
-        /* Cabeçalho */
-        header {
-            background: var(--verde);
-            color: white;
-            padding: 20px 0;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 8px var(--sombra);
-            margin-bottom: 30px;
+        /* Modo escuro (Alto Contraste) personalizado */
+        .dark body {
+            background-color: #121212;
+            color: #ffffff;
         }
-
-        header .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo img {
-            height: 60px;
-            width: auto;
-            background: white;
-            border-radius: 50%;
-            padding: 5px;
-        }
-
-        .logo h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 0 var(--azul);
-        }
-
-        .logo span {
-            color: var(--amarelo);
-        }
-
-        /* Navegação principal */
-        nav {
-            background: var(--azul);
-            border-radius: 50px;
-            padding: 8px 20px;
-            margin: 10px 0 20px;
-            box-shadow: 0 4px 6px var(--sombra);
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px 25px;
-            padding: 10px 0;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.2rem;
-            padding: 8px 16px;
-            border-radius: 30px;
-            transition: background 0.2s, transform 0.1s;
-            display: inline-block;
-        }
-
-        nav ul li a:hover,
-        nav ul li a:focus {
-            background: var(--amarelo);
-            color: var(--preto);
-            outline: 3px solid var(--amarelo);
-            outline-offset: 2px;
-        }
-
-        nav ul li a:active {
-            transform: scale(0.95);
-        }
-
-        /* Seções */
-        section {
-            background: var(--bg);
-            border-radius: 20px;
-            padding: 30px 25px;
-            margin-bottom: 40px;
-            box-shadow: 0 6px 12px var(--sombra);
-            border-left: 8px solid var(--verde);
-            transition: background 0.3s, border-color 0.3s;
-        }
-
-        section h2 {
-            font-size: 2rem;
-            color: var(--azul);
-            margin-bottom: 20px;
-            border-bottom: 4px solid var(--amarelo);
-            padding-bottom: 8px;
-            display: inline-block;
-        }
-
-        section h3 {
-            font-size: 1.6rem;
-            color: var(--verde);
-            margin: 15px 0 10px;
-        }
-
-        p {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-
-        /* Cards de apps */
-        .cards-apps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            margin: 20px 0;
-        }
-
-        .card-app {
-            background: var(--cinza-claro);
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            border: 3px solid var(--verde);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .card-app:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px var(--sombra);
-        }
-
-        .card-app a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 600;
-            font-size: 1.3rem;
-            display: block;
-        }
-
-        .card-app .icone {
-            font-size: 4rem;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        /* Vídeos */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .video-item {
-            background: var(--cinza-claro);
-            border-radius: 16px;
-            padding: 15px;
-            box-shadow: 0 4px 8px var(--sombra);
-        }
-
-        .video-item iframe {
-            width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 12px;
-            border: 2px solid var(--azul);
-        }
-
-        .video-item p {
-            margin-top: 10px;
-            font-weight: 600;
-            text-align: center;
-            font-size: 1.2rem;
-        }
-
-        /* Instruções escritas */
-        .instrucao {
-            background: var(--cinza-claro);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 6px solid var(--amarelo);
-        }
-
-        .instrucao ol {
-            padding-left: 30px;
-            font-size: 1.1rem;
-        }
-
-        .instrucao ol li {
-            margin: 10px 0;
-        }
-
-        /* Diário de senhas */
-        .diario-area {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .login-box {
-            background: var(--cinza-claro);
-            padding: 25px;
-            border-radius: 20px;
-            border: 2px solid var(--azul);
-        }
-
-        .login-box label {
-            display: block;
-            font-weight: 600;
-            margin: 10px 0 5px;
-            font-size: 1.1rem;
+        .dark .bg-white {
+            background-color: #1e1e1e !important;
         }
-
-        .login-box input {
-            width: 100%;
-            max-width: 300px;
-            padding: 12px;
-            font-size: 1.1rem;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            font-family: inherit;
-        }
-
-        .login-box button {
-            background: var(--verde);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s, transform 0.1s;
-            margin-right: 10px;
-        }
-
-        .login-box button:hover {
-            background: var(--azul);
-        }
-        .login-box button:active {
-            transform: scale(0.95);
-        }
-
-        .diario-conteudo {
-            background: var(--cinza-claro);
-            padding: 20px;
-            border-radius: 20px;
-            border: 2px solid var(--verde);
-            display: none;
-        }
-
-        .diario-conteudo.ativo {
-            display: block;
-        }
-
-        .diario-conteudo form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-width: 500px;
-        }
-
-        .diario-conteudo form label {
-            font-weight: 600;
-        }
-
-        .diario-conteudo form input,
-        .diario-conteudo form textarea {
-            padding: 12px;
-            font-size: 1rem;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            font-family: inherit;
-        }
-
-        .diario-conteudo form button {
-            background: var(--azul);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .diario-conteudo form button:hover {
-            background: var(--verde);
-        }
-
-        .lista-senhas {
-            margin-top: 20px;
-        }
-
-        .lista-senhas .item-senha {
-            background: var(--bg);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            border-left: 6px solid var(--amarelo);
-            box-shadow: 0 2px 4px var(--sombra);
-        }
-
-        .lista-senhas .item-senha strong {
-            color: var(--azul);
-        }
-
-        .btn-sair {
-            background: #d32f2f;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 15px;
+        .dark .text-gray-800, .dark .text-gray-900 {
+            color: #f3f4f6 !important;
         }
-
-        /* Links rápidos */
-        .links-rapidos {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .links-rapidos a {
-            background: var(--azul);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.3rem;
-            transition: background 0.2s, transform 0.1s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            border: 2px solid transparent;
-        }
-
-        .links-rapidos a:hover {
-            background: var(--verde);
-            border-color: var(--amarelo);
-            transform: scale(1.03);
-        }
-
-        /* Botão de acessibilidade flutuante */
-        .btn-acessibilidade {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--verde);
-            color: white;
-            border: none;
-            border-radius: 60px;
-            padding: 18px 24px;
-            font-size: 1.4rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            transition: transform 0.2s, background 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 3px solid var(--amarelo);
-        }
-
-        .btn-acessibilidade:hover {
-            transform: scale(1.05);
-            background: var(--azul);
-        }
-
-        /* Modal de acessibilidade */
-        .modal-acessibilidade {
-            position: fixed;
-            bottom: 110px;
-            right: 30px;
-            background: var(--bg);
-            color: var(--text);
-            border-radius: 24px;
-            padding: 25px;
-            width: 320px;
-            max-width: 90vw;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-            z-index: 999;
-            display: none;
-            border: 3px solid var(--verde);
-            transition: display 0.3s;
-        }
-
-        .modal-acessibilidade.ativo {
-            display: block;
-        }
-
-        .modal-acessibilidade h3 {
-            color: var(--azul);
-            margin-top: 0;
-            border-bottom: 3px solid var(--amarelo);
-            padding-bottom: 8px;
-        }
-
-        .modal-acessibilidade .opcao {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 15px 0;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--cinza-claro);
-        }
-
-        .modal-acessibilidade button {
-            background: var(--azul);
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 30px;
-            font-size: 1rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
-            min-width: 80px;
-        }
-
-        .modal-acessibilidade button:hover {
-            background: var(--verde);
+        .dark .text-gray-600 {
+            color: #d1d5db !important;
         }
-
-        .modal-acessibilidade .btn-toggle {
-            background: var(--verde);
+        .dark .bg-gray-100 {
+            background-color: #374151 !important;
         }
-
-        .modal-acessibilidade .btn-toggle.ativo {
-            background: #d32f2f;
+        .dark .border-gray-200 {
+            border-color: #4b5563 !important;
         }
 
-        .modal-acessibilidade .fechar-modal {
-            background: #d32f2f;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            margin-top: 10px;
+        /* Destaque ao ler o texto (Hover Reader) */
+        .reader-active *:hover {
+            background-color: rgba(255, 223, 0, 0.3) !important;
+            cursor: help !important;
+            outline: 2px solid #009c3b !important;
         }
 
-        /* Rodapé */
-        footer {
-            background: var(--azul);
-            color: white;
-            padding: 20px 0;
-            border-radius: 20px 20px 0 0;
-            text-align: center;
-            margin-top: 40px;
+        /* Utilitários para ocultar seções */
+        .hidden-section {
+            display: none !important;
         }
 
-        footer p {
-            font-size: 1rem;
-            margin: 0;
+        /* Custom Scrollbar para idosos - Mais grossa e visível */
+        ::-webkit-scrollbar {
+            width: 16px;
         }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            header .container {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .logo h1 {
-                font-size: 1.8rem;
-            }
-
-            nav ul {
-                gap: 5px;
-            }
-            nav ul li a {
-                font-size: 1rem;
-                padding: 6px 12px;
-            }
-
-            section {
-                padding: 20px 15px;
-            }
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-            .cards-apps {
-                grid-template-columns: 1fr 1fr;
-            }
-            .links-rapidos a {
-                font-size: 1.1rem;
-                padding: 12px 20px;
-            }
-            .modal-acessibilidade {
-                width: 280px;
-                right: 10px;
-                bottom: 100px;
-            }
-            .btn-acessibilidade {
-                padding: 14px 18px;
-                font-size: 1.2rem;
-                right: 15px;
-                bottom: 20px;
-            }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
         }
-
-        @media (max-width: 480px) {
-            .cards-apps {
-                grid-template-columns: 1fr;
-            }
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-            .btn-acessibilidade span {
-                display: none;
-            }
+        ::-webkit-scrollbar-thumb {
+            background: #009c3b; 
+            border-radius: 8px;
         }
-
-        /* utilitários */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #007a2e; 
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
 
-    <!-- Cabeçalho -->
-    <header>
-        <div class="container">
-            <div class="logo">
-                <!-- Ícone de acessibilidade representado por emoji -->
-                <span style="font-size:3.5rem; background:white; border-radius:50%; padding:5px;">♿</span>
-                <h1>Atalho<span>+</span></h1>
+    <div class="fixed bottom-6 right-6 z-50">
+        <!-- Botão Principal de Acessibilidade -->
+        <button id="btnA11y" aria-label="Abrir menu de acessibilidade" class="bg-br-blue text-white rounded-full w-20 h-20 flex items-center justify-center shadow-2xl hover:bg-blue-800 transition-colors border-4 border-white focus:ring-4 focus:ring-br-yellow">
+            <i class="fas fa-universal-access text-4xl"></i>
+        </button>
+
+        <!-- Menu/Modal de Acessibilidade (Oculto por padrão) -->
+        <div id="modalA11y" class="hidden absolute bottom-24 right-0 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-2xl border-2 border-br-green w-80 max-w-[90vw]">
+            <h2 class="text-2xl font-bold mb-4 text-center border-b-2 border-br-yellow pb-2">Acessibilidade</h2>
+            
+            <div class="space-y-4">
+                <!-- Tamanho da Letra -->
+                <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg text-center">
+                    <p class="font-bold mb-2">Tamanho da Letra</p>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="changeFontSize(-1)" class="bg-white dark:bg-gray-600 px-4 py-2 rounded shadow hover:bg-gray-200 border-2 border-gray-300 text-xl font-bold">A-</button>
+                        <button onclick="changeFontSize(1)" class="bg-white dark:bg-gray-600 px-4 py-2 rounded shadow hover:bg-gray-200 border-2 border-gray-300 text-2xl font-bold">A+</button>
+                    </div>
+                </div>
+
+                <!-- Botões de Alternância -->
+                <button onclick="toggleHighContrast()" id="btnContrast" class="w-full bg-gray-100 dark:bg-gray-700 p-4 rounded-lg font-bold text-left flex justify-between items-center hover:bg-gray-200 border-2 border-transparent transition-colors">
+                    <span><i class="fas fa-adjust mr-2"></i> Alto Contraste</span>
+                    <i class="fas fa-toggle-off text-2xl text-gray-400" id="iconContrast"></i>
+                </button>
+
+                <button onclick="toggleLargeTargets()" id="btnTargets" class="w-full bg-gray-100 dark:bg-gray-700 p-4 rounded-lg font-bold text-left flex justify-between items-center hover:bg-gray-200 border-2 border-transparent transition-colors">
+                    <span><i class="fas fa-mouse-pointer mr-2"></i> Botões Grandes</span>
+                    <i class="fas fa-toggle-off text-2xl text-gray-400" id="iconTargets"></i>
+                </button>
+
+                <button onclick="toggleSpeechReader()" id="btnSpeech" class="w-full bg-gray-100 dark:bg-gray-700 p-4 rounded-lg font-bold text-left flex justify-between items-center hover:bg-gray-200 border-2 border-transparent transition-colors">
+                    <span><i class="fas fa-volume-up mr-2"></i> Leitor de Voz</span>
+                    <i class="fas fa-toggle-off text-2xl text-gray-400" id="iconSpeech"></i>
+                </button>
             </div>
-            <p style="font-size:1.2rem; max-width:400px; background:rgba(0,0,0,0.2); padding:8px 20px; border-radius:30px;">
-                Seu guia digital para idosos
-            </p>
+            
+            <button id="closeA11y" class="mt-6 w-full bg-br-green text-white p-3 rounded-lg font-bold hover:bg-green-700">
+                Fechar Opções
+            </button>
+        </div>
+    </div>
+
+    <div id="messageModal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-md w-full text-center border-4 border-br-green shadow-2xl">
+            <i id="messageIcon" class="fas fa-info-circle text-6xl text-br-blue mb-4"></i>
+            <h3 id="messageTitle" class="text-3xl font-bold mb-4">Aviso</h3>
+            <p id="messageText" class="text-xl mb-8">Mensagem aqui</p>
+            <button onclick="closeMessage()" class="w-full bg-br-blue text-white py-4 rounded-xl text-2xl font-bold hover:bg-blue-800 transition-colors">
+                Entendi
+            </button>
+        </div>
+    </div>
+
+    <header class="bg-br-green text-white shadow-md border-b-8 border-br-yellow sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-4 sm:py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigate('inicio')" aria-label="Ir para a página inicial">
+                    <div class="bg-white text-br-green rounded-full w-14 h-14 flex items-center justify-center shadow-inner">
+                        <i class="fas fa-hands-helping text-3xl"></i>
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Facilita BR</h1>
+                </div>
+
+                <!-- Botão Menu Mobile -->
+                <button id="btnMobileMenu" class="md:hidden bg-white text-br-green px-4 py-2 rounded font-bold text-xl w-full">
+                    <i class="fas fa-bars"></i> Menu Principal
+                </button>
+
+                <nav id="mainNav" class="hidden md:flex flex-col md:flex-row gap-2 w-full md:w-auto mt-4 md:mt-0">
+                    <button onclick="navigate('videos')" class="nav-btn bg-green-800 hover:bg-green-900 px-5 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
+                        <i class="fas fa-play-circle mr-2"></i> Vídeos
+                    </button>
+                    <button onclick="navigate('instrucoes')" class="nav-btn bg-green-800 hover:bg-green-900 px-5 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
+                        <i class="fas fa-list-ol mr-2"></i> Passo a Passo
+                    </button>
+                    <button onclick="navigate('links')" class="nav-btn bg-green-800 hover:bg-green-900 px-5 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> Acesso Direto
+                    </button>
+                    <button onclick="navigate('diario')" class="nav-btn bg-br-yellow text-br-dark hover:bg-yellow-500 px-5 py-3 rounded-xl font-bold text-lg transition-colors shadow-md border-2 border-transparent focus:border-br-dark w-full text-left md:text-center">
+                        <i class="fas fa-book-open mr-2"></i> Diário de Senhas
+                    </button>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <!-- Navegação principal -->
-    <nav aria-label="Menu principal">
-        <ul>
-            <li><a href="#inicio">Início</a></li>
-            <li><a href="#videos">Vídeos</a></li>
-            <li><a href="#instrucoes">Instruções</a></li>
-            <li><a href="#diario">Diário de Senhas</a></li>
-            <li><a href="#links">Links Rápidos</a></li>
-        </ul>
-    </nav>
+    <main class="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
 
-    <main class="container">
-
-        <!-- Seção Início -->
-        <section id="inicio" aria-labelledby="titulo-inicio">
-            <h2 id="titulo-inicio">Bem-vindo ao Atalho+</h2>
-            <p>
-                Este site foi criado especialmente para <strong>idosos</strong> que desejam acessar serviços digitais
-                com mais facilidade. Sabemos que a tecnologia pode ser desafiadora, por isso reunimos aqui
-                <strong>tutoriais em vídeo</strong>, <strong>instruções passo a passo</strong> e um
-                <strong>diário seguro</strong> para guardar suas senhas.
-            </p>
-            <p>
-                Navegue pelo menu acima ou clique nos cards abaixo para acessar os principais serviços.
-            </p>
-
-            <div class="cards-apps">
-                <div class="card-app">
-                    <span class="icone">🚗</span>
-                    <a href="#videos">CNH Digital</a>
-                </div>
-                <div class="card-app">
-                    <span class="icone">🏛️</span>
-                    <a href="#videos">gov.br</a>
-                </div>
-                <div class="card-app">
-                    <span class="icone">🏦</span>
-                    <a href="#videos">Meu INSS</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção Vídeos -->
-        <section id="videos" aria-labelledby="titulo-videos">
-            <h2 id="titulo-videos">📺 Vídeos Tutoriais</h2>
-            <p>Assista aos vídeos abaixo para aprender a acessar cada serviço.</p>
-
-            <div class="video-grid">
-                <!-- CNH Digital -->
-                <div class="video-item">
-                    <iframe src="https://www.youtube.com/embed/eZH11dU23DM" allowfullscreen loading="lazy" title="Tutorial CNH Digital"></iframe>
-                    <p>CNH Digital</p>
-                </div>
-                <!-- gov.br -->
-                <div class="video-item">
-                    <iframe src="https://www.youtube.com/embed/I-wkyl5VQPo" allowfullscreen loading="lazy" title="Tutorial gov.br"></iframe>
-                    <p>gov.br</p>
-                </div>
-                <!-- Meu INSS -->
-                <div class="video-item">
-                    <iframe src="https://www.youtube.com/embed/iU4V4l_qd98" allowfullscreen loading="lazy" title="Tutorial Meu INSS"></iframe>
-                    <p>Meu INSS</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção Instruções Escritas -->
-        <section id="instrucoes" aria-labelledby="titulo-instrucoes">
-            <h2 id="titulo-instrucoes">📝 Instruções Passo a Passo</h2>
-
-            <div class="instrucao">
-                <h3>🔹 CNH Digital</h3>
-                <ol>
-                    <li>Baixe o aplicativo <strong>CNH Digital</strong> na loja de aplicativos do seu celular.</li>
-                    <li>Abra o app e clique em <strong>"Entrar"</strong>.</li>
-                    <li>Informe seu <strong>CPF</strong> e a <strong>senha</strong> cadastrada no gov.br.</li>
-                    <li>Se não tiver cadastro, clique em <strong>"Cadastrar"</strong> e siga as instruções.</li>
-                    <li>Após logar, sua CNH digital estará disponível para consulta.</li>
-                </ol>
-            </div>
-
-            <div class="instrucao">
-                <h3>🔹 gov.br</h3>
-                <ol>
-                    <li>Acesse o site <a href="https://gov.br" target="_blank">gov.br</a> ou baixe o aplicativo.</li>
-                    <li>Clique em <strong>"Entrar com gov.br"</strong>.</li>
-                    <li>Digite seu <strong>CPF</strong> e a <strong>senha</strong>.</li>
-                    <li>Se ainda não tiver conta, clique em <strong>"Criar conta"</strong> e preencha os dados.</li>
-                    <li>Pronto! Você pode acessar diversos serviços públicos.</li>
-                </ol>
-            </div>
-
-            <div class="instrucao">
-                <h3>🔹 Meu INSS</h3>
-                <ol>
-                    <li>Acesse o site <a href="https://meu.inss.gov.br" target="_blank">meu.inss.gov.br</a> ou baixe o app.</li>
-                    <li>Clique em <strong>"Entrar"</strong> e use seu login do gov.br.</li>
-                    <li>Informe CPF e senha.</li>
-                    <li>No menu, você pode consultar extratos, agendar perícias, etc.</li>
-                    <li>Para ajuda, assista ao vídeo tutorial acima.</li>
-                </ol>
-            </div>
-        </section>
-
-        <!-- Seção Diário de Senhas -->
-        <section id="diario" aria-labelledby="titulo-diario">
-            <h2 id="titulo-diario">🔐 Diário de Senhas</h2>
-            <p>Guarde suas senhas de forma segura. Crie uma senha mestra para acessar seus dados.</p>
-
-            <div class="diario-area">
-                <!-- Área de login -->
-                <div class="login-box" id="login-box">
-                    <label for="senha-mestra">Digite sua senha mestra para acessar o diário:</label>
-                    <input type="password" id="senha-mestra" placeholder="Senha mestra" aria-describedby="ajuda-senha">
-                    <span id="ajuda-senha" style="font-size:0.9rem; color:#555;">(A senha padrão é <strong>1234</strong> - você pode alterar depois)</span>
-                    <br>
-                    <button id="btn-entrar-diario">Entrar</button>
-                    <button id="btn-criar-senha">Criar senha mestra</button>
-                    <div id="mensagem-login" style="margin-top:10px; font-weight:600;"></div>
-                </div>
-
-                <!-- Conteúdo do diário (protegido) -->
-                <div class="diario-conteudo" id="diario-conteudo">
-                    <h3>Seus registros</h3>
-                    <form id="form-senha">
-                        <label for="servico">Serviço (ex: gov.br):</label>
-                        <input type="text" id="servico" required placeholder="Nome do serviço">
-
-                        <label for="usuario">Usuário / CPF:</label>
-                        <input type="text" id="usuario" required placeholder="Seu usuário ou CPF">
-
-                        <label for="senha">Senha:</label>
-                        <input type="text" id="senha" required placeholder="Senha cadastrada">
-
-                        <label for="obs">Observações (opcional):</label>
-                        <textarea id="obs" rows="2" placeholder="Alguma dica extra..."></textarea>
-
-                        <button type="submit">Salvar registro</button>
-                    </form>
-
-                    <div class="lista-senhas" id="lista-senhas">
-                        <!-- Registros serão inseridos aqui -->
+        <section id="inicio" class="content-section space-y-8 animate-fade-in">
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border-t-8 border-br-blue flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-2/3 space-y-6">
+                    <h2 class="text-4xl md:text-5xl font-bold text-br-blue dark:text-blue-400">
+                        Bem-vindo ao Facilita BR!
+                    </h2>
+                    <p class="text-2xl leading-relaxed">
+                        Nós sabemos que a internet pode parecer confusa às vezes. Tudo mudou muito rápido, não é?
+                    </p>
+                    <p class="text-2xl leading-relaxed">
+                        Por isso, criamos este espaço <strong>seguro e simples</strong> para você. Aqui você encontra atalhos fáceis, vídeos que explicam tudo com calma e um caderninho para guardar suas senhas sem medo de esquecer.
+                    </p>
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <button onclick="navigate('videos')" class="bg-br-blue text-white px-8 py-4 rounded-xl text-2xl font-bold shadow-lg hover:bg-blue-800 transition transform hover:scale-105 flex items-center">
+                            <i class="fas fa-play mr-3"></i> Quero ver os Vídeos
+                        </button>
                     </div>
+                </div>
+                <div class="md:w-1/3 flex justify-center">
+                    <!-- Imagem representativa acolhedora -->
+                    <div class="w-64 h-64 bg-br-yellow rounded-full flex items-center justify-center shadow-xl border-8 border-white dark:border-gray-700">
+                        <i class="fas fa-hands-helping text-9xl text-br-green"></i>
+                    </div>
+                </div>
+            </div>
 
-                    <button class="btn-sair" id="btn-sair-diario">Sair do diário</button>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 text-center cursor-pointer hover:shadow-xl transition" onclick="navigate('instrucoes')">
+                    <div class="text-5xl text-br-green mb-4"><i class="fas fa-glasses"></i></div>
+                    <h3 class="text-2xl font-bold mb-2">Tudo Explicado</h3>
+                    <p class="text-xl">Textos grandes ensinando o passo a passo de cada aplicativo.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 text-center cursor-pointer hover:shadow-xl transition" onclick="navigate('links')">
+                    <div class="text-5xl text-br-blue mb-4"><i class="fas fa-mouse-pointer"></i></div>
+                    <h3 class="text-2xl font-bold mb-2">Atalhos Seguros</h3>
+                    <p class="text-xl">Botões grandes que levam você direto para o site oficial.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 text-center cursor-pointer hover:shadow-xl transition" onclick="navigate('diario')">
+                    <div class="text-5xl text-br-yellow mb-4"><i class="fas fa-lock"></i></div>
+                    <h3 class="text-2xl font-bold mb-2">Suas Senhas</h3>
+                    <p class="text-xl">Um diário só seu para anotar as senhas que sempre esquecemos.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Seção Links Rápidos -->
-        <section id="links" aria-labelledby="titulo-links">
-            <h2 id="titulo-links">🔗 Links Diretos</h2>
-            <p>Clique nos botões abaixo para acessar os serviços oficiais:</p>
-
-            <div class="links-rapidos">
-                <a href="https://gov.br" target="_blank" rel="noopener">🏛️ gov.br</a>
-                <a href="https://www.gov.br/detran" target="_blank" rel="noopener">🚗 CNH Digital</a>
-                <a href="https://meu.inss.gov.br" target="_blank" rel="noopener">🏦 Meu INSS</a>
+        <section id="videos" class="hidden-section content-section space-y-8 animate-fade-in">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-l-8 border-br-blue">
+                <h2 class="text-4xl font-bold mb-4"><i class="fas fa-play-circle text-br-blue mr-3"></i> Vídeos Tutoriais</h2>
+                <p class="text-2xl mb-2">Assista aos vídeos abaixo. Eles explicam com calma como usar os serviços do governo.</p>
+                <p class="text-xl text-gray-600 dark:text-gray-400">Dica: Clique no meio do vídeo para dar o 'play' (iniciar).</p>
             </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Video gov.br -->
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border-2 border-gray-100">
+                    <h3 class="text-3xl font-bold mb-4 text-center">Como acessar o Gov.br</h3>
+                    <div class="relative w-full overflow-hidden rounded-xl" style="padding-top: 56.25%;">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/I-wkyl5VQPo" title="Tutorial gov.br" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Video Meu INSS -->
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border-2 border-gray-100">
+                    <h3 class="text-3xl font-bold mb-4 text-center">Como usar o Meu INSS</h3>
+                    <div class="relative w-full overflow-hidden rounded-xl" style="padding-top: 56.25%;">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/iU4V4l_qd98" title="Tutorial Meu INSS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Video CNH Digital -->
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border-2 border-gray-100 lg:col-span-2 lg:w-2/3 lg:mx-auto">
+                    <h3 class="text-3xl font-bold mb-4 text-center">Como baixar a CNH Digital</h3>
+                    <div class="relative w-full overflow-hidden rounded-xl" style="padding-top: 56.25%;">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/eZH11dU23DM" title="Tutorial CNH Digital" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="instrucoes" class="hidden-section content-section space-y-8 animate-fade-in">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-l-8 border-br-green">
+                <h2 class="text-4xl font-bold mb-4"><i class="fas fa-list-ol text-br-green mr-3"></i> Passo a Passo Escrito</h2>
+                <p class="text-2xl">Prefere ler? Aqui estão as instruções detalhadas em letras grandes.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- INSS -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow overflow-hidden border-2 border-gray-100">
+                    <div class="bg-blue-100 dark:bg-blue-900 p-6">
+                        <h3 class="text-3xl font-bold text-br-blue dark:text-blue-300">Meu INSS</h3>
+                    </div>
+                    <div class="p-6 space-y-4 text-2xl">
+                        <p><strong>1.</strong> Clique no botão de acesso direto ao INSS ou baixe o aplicativo no celular.</p>
+                        <p><strong>2.</strong> Na tela inicial, clique em <strong>"Entrar com gov.br"</strong> (um botão azul).</p>
+                        <p><strong>3.</strong> Digite o seu <strong>CPF</strong> (só os números) e clique em Continuar.</p>
+                        <p><strong>4.</strong> Digite a sua <strong>senha</strong> do gov.br e clique em Entrar.</p>
+                        <p><strong>5.</strong> Pronto! Agora você pode ver sua aposentadoria e extratos.</p>
+                    </div>
+                </div>
+
+                <!-- CNH -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow overflow-hidden border-2 border-gray-100">
+                    <div class="bg-green-100 dark:bg-green-900 p-6">
+                        <h3 class="text-3xl font-bold text-br-green dark:text-green-300">CNH Digital</h3>
+                    </div>
+                    <div class="p-6 space-y-4 text-2xl">
+                        <p><strong>1.</strong> No seu celular, procure pela lojinha de aplicativos e baixe o <strong>"Carteira Digital de Trânsito"</strong>.</p>
+                        <p><strong>2.</strong> Abra o aplicativo e clique em <strong>"Entrar com gov.br"</strong>.</p>
+                        <p><strong>3.</strong> Coloque seu CPF e sua senha.</p>
+                        <p><strong>4.</strong> Para adicionar o documento, clique em <strong>"Habilitação"</strong> e aponte a câmera do celular para o código (QR Code) atrás da sua CNH de papel.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="links" class="hidden-section content-section space-y-8 animate-fade-in">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-l-8 border-br-yellow">
+                <h2 class="text-4xl font-bold mb-4"><i class="fas fa-external-link-alt text-yellow-600 mr-3"></i> Acesso Direto (Atalhos)</h2>
+                <p class="text-2xl">Clique nos botões gigantes abaixo para ir diretamente para a página oficial do governo.</p>
+            </div>
+
+            <div class="flex flex-col gap-6 w-full max-w-3xl mx-auto">
+                <a href="https://acesso.gov.br" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-gray-700 border-4 border-br-blue rounded-3xl p-8 flex items-center justify-between shadow-xl hover:bg-blue-50 dark:hover:bg-gray-600 transition group focus:ring-8 focus:ring-br-yellow focus:outline-none">
+                    <div class="flex items-center gap-6">
+                        <div class="bg-br-blue text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-md">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-4xl font-bold text-br-blue dark:text-blue-300 group-hover:underline">Gov.br</h3>
+                            <p class="text-2xl text-gray-600 dark:text-gray-300 mt-2">Acesso unificado do Governo</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-5xl text-gray-400 group-hover:text-br-blue"></i>
+                </a>
+
+                <a href="https://meu.inss.gov.br/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-gray-700 border-4 border-br-green rounded-3xl p-8 flex items-center justify-between shadow-xl hover:bg-green-50 dark:hover:bg-gray-600 transition group focus:ring-8 focus:ring-br-yellow focus:outline-none">
+                    <div class="flex items-center gap-6">
+                        <div class="bg-br-green text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-md">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-4xl font-bold text-br-green dark:text-green-400 group-hover:underline">Meu INSS</h3>
+                            <p class="text-2xl text-gray-600 dark:text-gray-300 mt-2">Aposentadoria, benefícios e extratos</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-5xl text-gray-400 group-hover:text-br-green"></i>
+                </a>
+
+                <a href="https://campanhas.serpro.gov.br/cdt/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-gray-700 border-4 border-gray-800 dark:border-gray-400 rounded-3xl p-8 flex items-center justify-between shadow-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition group focus:ring-8 focus:ring-br-yellow focus:outline-none">
+                    <div class="flex items-center gap-6">
+                        <div class="bg-gray-800 text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-md">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-4xl font-bold text-gray-800 dark:text-white group-hover:underline">CNH Digital</h3>
+                            <p class="text-2xl text-gray-600 dark:text-gray-300 mt-2">Sua carteira de motorista no celular</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-5xl text-gray-400 group-hover:text-gray-800"></i>
+                </a>
+            </div>
+        </section>
+
+        <section id="diario" class="hidden-section content-section animate-fade-in max-w-4xl mx-auto">
+            
+            <!-- Tela de Bloqueio do Diário -->
+            <div id="diaryLockScreen" class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border-t-8 border-br-yellow text-center space-y-6">
+                <i class="fas fa-lock text-7xl text-br-yellow mb-4"></i>
+                <h2 class="text-4xl font-bold">Seu Diário de Senhas</h2>
+                <p class="text-2xl">Este é um espaço seguro. Crie uma senha de 4 números (ou digite a que já criou nesta visita) para abrir o caderninho.</p>
+                
+                <div class="max-w-xs mx-auto space-y-4">
+                    <input type="password" id="diaryPin" maxlength="4" placeholder="Ex: 1234" class="w-full text-center text-4xl p-4 border-4 border-gray-300 rounded-xl focus:border-br-yellow focus:outline-none bg-gray-50 dark:bg-gray-700 dark:text-white" pattern="\d*">
+                    
+                    <button onclick="unlockDiary()" class="w-full bg-br-yellow text-br-dark py-4 rounded-xl text-3xl font-bold hover:bg-yellow-500 transition-colors shadow-lg border-2 border-transparent focus:border-black">
+                        Abrir Diário
+                    </button>
+                </div>
+                <p class="text-lg text-gray-500 mt-4">Aviso: Por segurança, ao fechar o site as senhas são apagadas neste modo simples.</p>
+            </div>
+
+            <!-- Conteúdo do Diário (Oculto até destrancar) -->
+            <div id="diaryContent" class="hidden space-y-8">
+                <div class="flex justify-between items-center bg-br-yellow text-br-dark p-6 rounded-2xl shadow-lg">
+                    <h2 class="text-4xl font-bold"><i class="fas fa-book-open mr-3"></i> Meu Caderninho</h2>
+                    <button onclick="lockDiary()" class="bg-white text-br-dark px-4 py-2 rounded-lg font-bold text-xl hover:bg-gray-200">
+                        <i class="fas fa-lock"></i> Fechar
+                    </button>
+                </div>
+
+                <!-- Formulário para Adicionar -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-2 border-gray-200">
+                    <h3 class="text-3xl font-bold mb-6">Anotar nova senha</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-2xl font-bold mb-2">Qual é o site/aplicativo?</label>
+                            <input type="text" id="entrySite" placeholder="Ex: Gov.br, Facebook, INSS" class="w-full p-4 border-2 border-gray-300 rounded-xl text-2xl dark:bg-gray-700 dark:border-gray-600 focus:border-br-blue focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-2xl font-bold mb-2">Qual é o Login (CPF ou Email)?</label>
+                            <input type="text" id="entryLogin" placeholder="Ex: 123.456.789-00" class="w-full p-4 border-2 border-gray-300 rounded-xl text-2xl dark:bg-gray-700 dark:border-gray-600 focus:border-br-blue focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-2xl font-bold mb-2">Qual é a Senha?</label>
+                            <input type="text" id="entryPassword" placeholder="Sua senha aqui" class="w-full p-4 border-2 border-gray-300 rounded-xl text-2xl dark:bg-gray-700 dark:border-gray-600 focus:border-br-blue focus:outline-none">
+                        </div>
+                        <button onclick="addDiaryEntry()" class="w-full bg-br-green text-white py-4 rounded-xl text-3xl font-bold hover:bg-green-700 transition-colors shadow mt-4">
+                            <i class="fas fa-save mr-2"></i> Salvar no Caderno
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lista de Senhas -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-2 border-gray-200">
+                    <h3 class="text-3xl font-bold mb-6">Senhas Salvas</h3>
+                    <div id="entriesList" class="space-y-4">
+                        <!-- Itens inseridos via JS -->
+                    </div>
+                </div>
+            </div>
+
         </section>
 
     </main>
 
-    <!-- Rodapé -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Atalho+ - Acessibilidade para Idosos. Desenvolvido com ♥.</p>
-            <p style="font-size:0.9rem; opacity:0.8;">Clique no botão ♿ ao lado para ajustar a acessibilidade.</p>
-        </div>
+    <footer class="bg-gray-800 text-white text-center p-6 mt-8">
+        <p class="text-xl">Projeto Acessibilidade Digital - Feito para facilitar o seu dia a dia.</p>
     </footer>
 
-    <!-- Botão flutuante de acessibilidade -->
-    <button class="btn-acessibilidade" id="btn-acessibilidade" aria-label="Abrir opções de acessibilidade">
-        ♿ <span>Acessibilidade</span>
-    </button>
-
-    <!-- Modal de acessibilidade -->
-    <div class="modal-acessibilidade" id="modal-acessibilidade" role="dialog" aria-modal="true" aria-labelledby="titulo-modal">
-        <h3 id="titulo-modal">Opções de Acessibilidade</h3>
-
-        <div class="opcao">
-            <span>🔍 Aumentar fonte</span>
-            <button id="aumentar-fonte">+</button>
-        </div>
-        <div class="opcao">
-            <span>🔍 Diminuir fonte</span>
-            <button id="diminuir-fonte">−</button>
-        </div>
-        <div class="opcao">
-            <span>🌓 Modo escuro</span>
-            <button id="toggle-modo-escuro" class="btn-toggle">Ativar</button>
-        </div>
-        <div class="opcao">
-            <span>🔊 Leitura de texto</span>
-            <button id="toggle-leitura" class="btn-toggle">Ativar</button>
-        </div>
-        <div class="opcao">
-            <span>🔄 Redefinir tamanho</span>
-            <button id="resetar-fonte">Redefinir</button>
-        </div>
-
-        <button class="fechar-modal" id="fechar-modal-acessibilidade">Fechar</button>
-    </div>
-
     <script>
-        (function() {
-            'use strict';
-
-            // --- ELEMENTOS ---
-            const body = document.body;
-            const modalAcessibilidade = document.getElementById('modal-acessibilidade');
-            const btnAcessibilidade = document.getElementById('btn-acessibilidade');
-            const fecharModal = document.getElementById('fechar-modal-acessibilidade');
-
-            const btnAumentar = document.getElementById('aumentar-fonte');
-            const btnDiminuir = document.getElementById('diminuir-fonte');
-            const btnResetar = document.getElementById('resetar-fonte');
-            const btnModoEscuro = document.getElementById('toggle-modo-escuro');
-            const btnLeitura = document.getElementById('toggle-leitura');
-
-            // --- VARIÁVEIS DE ESTADO ---
-            let modoEscuroAtivo = false;
-            let leituraAtiva = false;
-            let tamanhoFonteAtual = 18; // em px
-
-            // --- FUNÇÕES DE FONTE ---
-            function aplicarTamanhoFonte(tamanho) {
-                tamanhoFonteAtual = Math.min(36, Math.max(14, tamanho));
-                document.documentElement.style.setProperty('--fonte-base', tamanhoFonteAtual + 'px');
-                // Ajusta também o body diretamente para garantir
-                body.style.fontSize = tamanhoFonteAtual + 'px';
-                // Atualiza elementos que usam rem ou em - a base já foi alterada via variável
-                // Força reflow
-                document.body.style.fontSize = tamanhoFonteAtual + 'px';
-            }
-
-            function aumentarFonte() {
-                aplicarTamanhoFonte(tamanhoFonteAtual + 2);
-            }
-
-            function diminuirFonte() {
-                aplicarTamanhoFonte(tamanhoFonteAtual - 2);
-            }
-
-            function resetarFonte() {
-                aplicarTamanhoFonte(18);
-            }
-
-            // --- MODO ESCURO ---
-            function toggleModoEscuro() {
-                modoEscuroAtivo = !modoEscuroAtivo;
-                body.classList.toggle('modo-escuro', modoEscuroAtivo);
-                btnModoEscuro.textContent = modoEscuroAtivo ? 'Desativar' : 'Ativar';
-                btnModoEscuro.classList.toggle('ativo', modoEscuroAtivo);
-                // Salva preferência
-                localStorage.setItem('modoEscuro', modoEscuroAtivo ? 'true' : 'false');
-            }
-
-            // --- LEITURA DE TEXTO (Speech Synthesis) ---
-            function toggleLeitura() {
-                leituraAtiva = !leituraAtiva;
-                btnLeitura.textContent = leituraAtiva ? 'Desativar' : 'Ativar';
-                btnLeitura.classList.toggle('ativo', leituraAtiva);
-                // Remove ou adiciona eventos
-                if (leituraAtiva) {
-                    document.addEventListener('mouseover', lerElemento);
-                    document.addEventListener('focusin', lerElemento); // para navegação por teclado
-                } else {
-                    document.removeEventListener('mouseover', lerElemento);
-                    document.removeEventListener('focusin', lerElemento);
-                    // Cancela qualquer fala em andamento
-                    window.speechSynthesis.cancel();
-                }
-                localStorage.setItem('leituraAtiva', leituraAtiva ? 'true' : 'false');
-            }
-
-            function lerElemento(event) {
-                const elemento = event.target;
-                // Verifica se é um elemento que contém texto relevante: p, h1-h6, li, label, a, button, span com texto
-                const tag = elemento.tagName.toLowerCase();
-                const tagsValidas = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'label', 'a', 'button', 'span', 'div', 'strong', 'em'];
-                if (!tagsValidas.includes(tag)) return;
-
-                // Pega o texto do elemento, ignorando filhos que podem ser outros elementos (ex: ícones)
-                let texto = elemento.textContent.trim();
-                if (!texto || texto.length < 2) return;
-
-                // Verifica se o elemento está dentro de um container visível (não oculto)
-                const rect = elemento.getBoundingClientRect();
-                if (rect.width === 0 && rect.height === 0) return;
-
-                // Evita leitura repetida do mesmo elemento (pequeno debounce)
-                if (elemento.dataset.leitura) {
-                    // já está lendo, evitar repetição
-                    return;
-                }
-
-                // Cancela fala anterior para não acumular
-                window.speechSynthesis.cancel();
-
-                const utterance = new SpeechSynthesisUtterance(texto);
-                utterance.lang = 'pt-BR';
-                utterance.rate = 0.9; // um pouco mais lento para idosos
-                utterance.pitch = 1;
-                utterance.volume = 1;
-                window.speechSynthesis.speak(utterance);
-
-                // Marca o elemento para não repetir imediatamente
-                elemento.dataset.leitura = 'true';
-                setTimeout(() => {
-                    delete elemento.dataset.leitura;
-                }, 500);
-            }
-
-            // --- MODAL ACESSIBILIDADE ---
-            function abrirModal() {
-                modalAcessibilidade.classList.add('ativo');
-                // Foca no primeiro botão
-                const primeiroBotao = modalAcessibilidade.querySelector('button');
-                if (primeiroBotao) primeiroBotao.focus();
-            }
-
-            function fecharModalAcessibilidade() {
-                modalAcessibilidade.classList.remove('ativo');
-                btnAcessibilidade.focus();
-            }
-
-            // Eventos do modal
-            btnAcessibilidade.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (modalAcessibilidade.classList.contains('ativo')) {
-                    fecharModalAcessibilidade();
-                } else {
-                    abrirModal();
-                }
+        // === Navegação ===
+        function navigate(sectionId) {
+            // Oculta todas as seções
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.add('hidden-section');
             });
-
-            fecharModal.addEventListener('click', fecharModalAcessibilidade);
-
-            // Fechar modal ao clicar fora (no backdrop) - captura no document
-            document.addEventListener('click', function(e) {
-                if (modalAcessibilidade.classList.contains('ativo')) {
-                    // Verifica se o clique foi fora do modal e fora do botão que abriu
-                    const target = e.target;
-                    if (!modalAcessibilidade.contains(target) && target !== btnAcessibilidade && !btnAcessibilidade.contains(target)) {
-                        fecharModalAcessibilidade();
-                    }
-                }
-            });
-
-            // Fechar com ESC
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && modalAcessibilidade.classList.contains('ativo')) {
-                    fecharModalAcessibilidade();
-                }
-            });
-
-            // --- DIÁRIO DE SENHAS (LOCALSTORAGE) ---
-            const senhaMestraInput = document.getElementById('senha-mestra');
-            const btnEntrar = document.getElementById('btn-entrar-diario');
-            const btnCriarSenha = document.getElementById('btn-criar-senha');
-            const mensagemLogin = document.getElementById('mensagem-login');
-            const diarioConteudo = document.getElementById('diario-conteudo');
-            const loginBox = document.getElementById('login-box');
-            const formSenha = document.getElementById('form-senha');
-            const listaSenhas = document.getElementById('lista-senhas');
-            const btnSair = document.getElementById('btn-sair-diario');
-
-            // Chave para armazenar a senha mestra
-            const STORAGE_SENHA = 'diario_senha_mestra';
-            const STORAGE_REGISTROS = 'diario_registros';
-
-            // Inicializa
-            let senhaMestraAtual = localStorage.getItem(STORAGE_SENHA) || '';
-            let registros = [];
-
-            function carregarRegistros() {
-                const dados = localStorage.getItem(STORAGE_REGISTROS);
-                if (dados) {
-                    try {
-                        registros = JSON.parse(dados);
-                    } catch(e) {
-                        registros = [];
-                    }
-                } else {
-                    registros = [];
-                }
+            // Mostra a seção clicada
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.classList.remove('hidden-section');
+                // Rola para o topo suavemente
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            function salvarRegistros() {
-                localStorage.setItem(STORAGE_REGISTROS, JSON.stringify(registros));
+            // Fecha menu mobile se estiver aberto
+            const nav = document.getElementById('mainNav');
+            if(!nav.classList.contains('hidden') && window.innerWidth < 768) {
+                nav.classList.add('hidden');
             }
+        }
 
-            function renderizarRegistros() {
-                listaSenhas.innerHTML = '';
-                if (registros.length === 0) {
-                    listaSenhas.innerHTML = '<p style="font-style:italic;">Nenhuma senha salva ainda.</p>';
-                    return;
-                }
-                registros.forEach((item, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'item-senha';
-                    div.innerHTML = `
-                        <strong>${item.servico}</strong><br>
-                        Usuário: ${item.usuario}<br>
-                        Senha: ${item.senha}<br>
-                        ${item.obs ? 'Obs: ' + item.obs : ''}
-                        <button data-index="${index}" class="btn-excluir-senha" style="background:#d32f2f;color:white;border:none;border-radius:30px;padding:4px 14px;margin-top:8px;cursor:pointer;">Excluir</button>
-                    `;
-                    listaSenhas.appendChild(div);
-                });
+        // Menu Mobile Toggle
+        document.getElementById('btnMobileMenu').addEventListener('click', () => {
+            document.getElementById('mainNav').classList.toggle('hidden');
+        });
 
-                // Eventos para excluir
-                document.querySelectorAll('.btn-excluir-senha').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.index, 10);
-                        if (confirm('Tem certeza que deseja excluir este registro?')) {
-                            registros.splice(idx, 1);
-                            salvarRegistros();
-                            renderizarRegistros();
-                        }
-                    });
-                });
-            }
-
-            function entrarDiario(senha) {
-                if (senha === senhaMestraAtual) {
-                    loginBox.style.display = 'none';
-                    diarioConteudo.classList.add('ativo');
-                    carregarRegistros();
-                    renderizarRegistros();
-                    mensagemLogin.textContent = '';
-                } else {
-                    mensagemLogin.textContent = '❌ Senha incorreta. Tente novamente.';
-                    mensagemLogin.style.color = '#d32f2f';
-                }
-            }
-
-            function sairDiario() {
-                diarioConteudo.classList.remove('ativo');
-                loginBox.style.display = 'block';
-                senhaMestraInput.value = '';
-                mensagemLogin.textContent = '';
-                // Fecha qualquer leitura ativa
-                window.speechSynthesis.cancel();
-            }
-
-            // Eventos do diário
-            btnEntrar.addEventListener('click', function() {
-                const senha = senhaMestraInput.value.trim();
-                if (!senha) {
-                    mensagemLogin.textContent = 'Digite a senha mestra.';
-                    mensagemLogin.style.color = '#d32f2f';
-                    return;
-                }
-                entrarDiario(senha);
-            });
-
-            btnCriarSenha.addEventListener('click', function() {
-                const nova = prompt('Crie uma nova senha mestra (mínimo 4 caracteres):');
-                if (nova && nova.length >= 4) {
-                    senhaMestraAtual = nova;
-                    localStorage.setItem(STORAGE_SENHA, nova);
-                    mensagemLogin.textContent = '✅ Senha mestra criada com sucesso! Use-a para entrar.';
-                    mensagemLogin.style.color = 'green';
-                    // Limpa o campo
-                    senhaMestraInput.value = '';
-                } else if (nova !== null) {
-                    alert('A senha deve ter pelo menos 4 caracteres.');
-                }
-            });
-
-            btnSair.addEventListener('click', sairDiario);
-
-            // Formulário de adicionar senha
-            formSenha.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const servico = document.getElementById('servico').value.trim();
-                const usuario = document.getElementById('usuario').value.trim();
-                const senha = document.getElementById('senha').value.trim();
-                const obs = document.getElementById('obs').value.trim();
-
-                if (!servico || !usuario || !senha) {
-                    alert('Preencha Serviço, Usuário e Senha.');
-                    return;
-                }
-
-                registros.push({ servico, usuario, senha, obs });
-                salvarRegistros();
-                renderizarRegistros();
-                formSenha.reset();
-                // Foco no primeiro campo
-                document.getElementById('servico').focus();
-            });
-
-            // Se já houver senha mestra, mostra mensagem
-            if (senhaMestraAtual) {
-                // Não exibe mensagem de criação
+        // === Custom Modal (Substituto do Alert) ===
+        function showMessage(title, text, type = 'info') {
+            document.getElementById('messageTitle').innerText = title;
+            document.getElementById('messageText').innerText = text;
+            
+            const icon = document.getElementById('messageIcon');
+            icon.className = 'fas text-6xl mb-4 '; // reseta
+            
+            if (type === 'error') {
+                icon.className += 'fa-exclamation-triangle text-red-500';
+            } else if (type === 'success') {
+                icon.className += 'fa-check-circle text-br-green';
             } else {
-                // Se não houver, sugere criar
-                mensagemLogin.textContent = '💡 Ainda não há senha mestra. Clique em "Criar senha mestra".';
-                mensagemLogin.style.color = '#0033A0';
+                icon.className += 'fa-info-circle text-br-blue';
             }
 
-            // --- SALVAR PREFERÊNCIAS DE ACESSIBILIDADE ---
-            function carregarPreferencias() {
-                // Modo escuro
-                const modoEscuroSalvo = localStorage.getItem('modoEscuro');
-                if (modoEscuroSalvo === 'true') {
-                    modoEscuroAtivo = true;
-                    body.classList.add('modo-escuro');
-                    btnModoEscuro.textContent = 'Desativar';
-                    btnModoEscuro.classList.add('ativo');
-                }
-                // Leitura
-                const leituraSalva = localStorage.getItem('leituraAtiva');
-                if (leituraSalva === 'true') {
-                    leituraAtiva = true;
-                    btnLeitura.textContent = 'Desativar';
-                    btnLeitura.classList.add('ativo');
-                    document.addEventListener('mouseover', lerElemento);
-                    document.addEventListener('focusin', lerElemento);
-                }
-                // Tamanho da fonte salvo?
-                const tamanhoSalvo = localStorage.getItem('tamanhoFonte');
-                if (tamanhoSalvo) {
-                    const t = parseInt(tamanhoSalvo, 10);
-                    if (!isNaN(t) && t >= 14 && t <= 36) {
-                        aplicarTamanhoFonte(t);
-                    }
+            document.getElementById('messageModal').classList.remove('hidden');
+        }
+
+        function closeMessage() {
+            document.getElementById('messageModal').classList.add('hidden');
+        }
+
+        // === Menu de Acessibilidade Flutuante ===
+        const btnA11y = document.getElementById('btnA11y');
+        const modalA11y = document.getElementById('modalA11y');
+        const closeA11y = document.getElementById('closeA11y');
+
+        btnA11y.addEventListener('click', () => {
+            modalA11y.classList.toggle('hidden');
+        });
+        closeA11y.addEventListener('click', () => {
+            modalA11y.classList.add('hidden');
+        });
+
+        // === Funções de Acessibilidade ===
+
+        // 1. Tamanho da Letra
+        let currentZoom = 0; // -1, 0, 1, 2, 3...
+        const rootHtml = document.documentElement;
+        
+        function changeFontSize(step) {
+            const baseSize = 20; // px (tamanho base grande para idosos)
+            currentZoom += step;
+            
+            // Limites (muito pequeno ou absurdamente grande)
+            if (currentZoom < -2) currentZoom = -2;
+            if (currentZoom > 5) currentZoom = 5;
+
+            const newSize = baseSize + (currentZoom * 4); // aumenta de 4 em 4 px
+            rootHtml.style.fontSize = `${newSize}px`;
+        }
+
+        // 2. Alto Contraste (Dark Mode)
+        let isHighContrast = false;
+        function toggleHighContrast() {
+            isHighContrast = !isHighContrast;
+            const icon = document.getElementById('iconContrast');
+            
+            if (isHighContrast) {
+                rootHtml.classList.add('dark');
+                icon.classList.remove('fa-toggle-off', 'text-gray-400');
+                icon.classList.add('fa-toggle-on', 'text-br-green');
+            } else {
+                rootHtml.classList.remove('dark');
+                icon.classList.add('fa-toggle-off', 'text-gray-400');
+                icon.classList.remove('fa-toggle-on', 'text-br-green');
+            }
+        }
+
+        // 3. Áreas de Clique Ampliadas (Botões Grandes)
+        let isLargeTargets = false;
+        function toggleLargeTargets() {
+            isLargeTargets = !isLargeTargets;
+            const icon = document.getElementById('iconTargets');
+            
+            if (isLargeTargets) {
+                document.body.classList.add('large-targets');
+                icon.classList.remove('fa-toggle-off', 'text-gray-400');
+                icon.classList.add('fa-toggle-on', 'text-br-green');
+            } else {
+                document.body.classList.remove('large-targets');
+                icon.classList.add('fa-toggle-off', 'text-gray-400');
+                icon.classList.remove('fa-toggle-on', 'text-br-green');
+            }
+        }
+
+        // 4. Leitor de Voz (Hover to Speech)
+        let isReaderActive = false;
+        
+        function toggleSpeechReader() {
+            if (!('speechSynthesis' in window)) {
+                showMessage("Aviso", "Seu navegador não suporta leitura de voz.", "error");
+                return;
+            }
+            
+            isReaderActive = !isReaderActive;
+            const icon = document.getElementById('iconSpeech');
+            
+            if (isReaderActive) {
+                document.body.classList.add('reader-active');
+                icon.classList.remove('fa-toggle-off', 'text-gray-400');
+                icon.classList.add('fa-toggle-on', 'text-br-green');
+                showMessage("Leitor Ativado", "Passe a setinha do mouse (ou clique e segure no celular) sobre os textos para ouvir.", "info");
+            } else {
+                document.body.classList.remove('reader-active');
+                icon.classList.add('fa-toggle-off', 'text-gray-400');
+                icon.classList.remove('fa-toggle-on', 'text-br-green');
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // Lógica do Hover para o Leitor
+        document.body.addEventListener('mouseover', function(e) {
+            if (!isReaderActive) return;
+            
+            const target = e.target;
+            // Lê apenas elementos de texto diretos para não ler blocos gigantes de uma vez
+            const validTags = ['P', 'H1', 'H2', 'H3', 'H4', 'SPAN', 'BUTTON', 'A', 'LI', 'LABEL'];
+            
+            if (validTags.includes(target.tagName)) {
+                const text = target.innerText || target.textContent;
+                if (text.trim().length > 0) {
+                    window.speechSynthesis.cancel(); // Para a fala anterior
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'pt-BR'; // Português do Brasil
+                    utterance.rate = 0.9; // Um pouco mais lento para melhor compreensão
+                    utterance.pitch = 1;
+                    window.speechSynthesis.speak(utterance);
                 }
             }
+        });
 
-            // --- EVENTOS DOS BOTÕES DE ACESSIBILIDADE ---
-            btnAumentar.addEventListener('click', function() {
-                aumentarFonte();
-                localStorage.setItem('tamanhoFonte', tamanhoFonteAtual.toString());
-            });
+        document.body.addEventListener('mouseout', function(e) {
+            if (isReaderActive) {
+                // Ao tirar o mouse, se quiser pode parar. Mas pode ser abrupto. 
+                // window.speechSynthesis.cancel(); 
+            }
+        });
 
-            btnDiminuir.addEventListener('click', function() {
-                diminuirFonte();
-                localStorage.setItem('tamanhoFonte', tamanhoFonteAtual.toString());
-            });
+        
+        // Estado do Diário
+        let savedPin = null; // Para esta sessão
+        let diaryEntries = []; 
 
-            btnResetar.addEventListener('click', function() {
-                resetarFonte();
-                localStorage.setItem('tamanhoFonte', tamanhoFonteAtual.toString());
-            });
-
-            btnModoEscuro.addEventListener('click', function() {
-                toggleModoEscuro();
-            });
-
-            btnLeitura.addEventListener('click', function() {
-                toggleLeitura();
-            });
-
-            // --- INICIALIZAÇÃO ---
-            carregarPreferencias();
-            // Aplica tamanho de fonte base (se não tiver salvo, usa 18)
-            if (!localStorage.getItem('tamanhoFonte')) {
-                aplicarTamanhoFonte(18);
+        function unlockDiary() {
+            const pinInput = document.getElementById('diaryPin').value;
+            
+            if (pinInput.length < 4) {
+                showMessage("Senha curta", "Por favor, digite pelo menos 4 números.", "error");
+                return;
             }
 
-            console.log('Atalho+ carregado com sucesso!');
-        })();
+            if (savedPin === null) {
+                // Primeira vez abrindo nesta sessão, define a senha
+                savedPin = pinInput;
+                openDiaryContent();
+                showMessage("Diário Aberto", "Senha gravada para este acesso. Bem-vindo ao seu caderninho!", "success");
+            } else {
+                // Já tem senha, verifica se confere
+                if (pinInput === savedPin) {
+                    openDiaryContent();
+                } else {
+                    showMessage("Erro", "A senha não confere com a que você criou ao abrir. Tente novamente.", "error");
+                }
+            }
+            document.getElementById('diaryPin').value = '';
+        }
+
+        function openDiaryContent() {
+            document.getElementById('diaryLockScreen').classList.add('hidden');
+            document.getElementById('diaryContent').classList.remove('hidden');
+            renderEntries();
+        }
+
+        function lockDiary() {
+            document.getElementById('diaryContent').classList.add('hidden');
+            document.getElementById('diaryLockScreen').classList.remove('hidden');
+        }
+
+        function addDiaryEntry() {
+            const site = document.getElementById('entrySite').value.trim();
+            const login = document.getElementById('entryLogin').value.trim();
+            const password = document.getElementById('entryPassword').value.trim();
+
+            if (!site || !login || !password) {
+                showMessage("Atenção", "Por favor, preencha todos os campos (Site, Login e Senha) antes de salvar.", "error");
+                return;
+            }
+
+            diaryEntries.push({ site, login, password, id: Date.now() });
+            
+            // Limpa form
+            document.getElementById('entrySite').value = '';
+            document.getElementById('entryLogin').value = '';
+            document.getElementById('entryPassword').value = '';
+
+            renderEntries();
+            showMessage("Salvo!", "Sua senha foi guardada no caderninho.", "success");
+        }
+
+        function renderEntries() {
+            const list = document.getElementById('entriesList');
+            list.innerHTML = '';
+
+            if (diaryEntries.length === 0) {
+                list.innerHTML = '<p class="text-xl text-gray-500 italic p-4 text-center">Seu caderno está vazio. Adicione uma senha acima.</p>';
+                return;
+            }
+
+            diaryEntries.forEach(entry => {
+                const item = document.createElement('div');
+                item.className = 'bg-gray-50 dark:bg-gray-700 p-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4';
+                
+                item.innerHTML = `
+                    <div class="flex-grow space-y-1">
+                        <h4 class="text-2xl font-bold text-br-blue dark:text-blue-300">${entry.site}</h4>
+                        <p class="text-xl"><strong>Login:</strong> ${entry.login}</p>
+                        <p class="text-xl flex items-center">
+                            <strong>Senha:&nbsp;</strong> 
+                            <span class="password-mask text-gray-500 tracking-[0.3em]">••••••••</span>
+                            <span class="password-text hidden text-br-green font-bold">${entry.password}</span>
+                        </p>
+                    </div>
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <button onclick="togglePasswordVisibility(this)" class="flex-1 md:flex-none bg-blue-100 text-blue-800 px-4 py-3 rounded-lg font-bold hover:bg-blue-200 border border-blue-300">
+                            <i class="fas fa-eye"></i> Ver
+                        </button>
+                        <button onclick="deleteEntry(${entry.id})" class="flex-1 md:flex-none bg-red-100 text-red-800 px-4 py-3 rounded-lg font-bold hover:bg-red-200 border border-red-300">
+                            <i class="fas fa-trash"></i> Apagar
+                        </button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Deixa a função global para o onclick inline funcionar
+        window.togglePasswordVisibility = function(btn) {
+            const container = btn.closest('div').previousElementSibling;
+            const mask = container.querySelector('.password-mask');
+            const text = container.querySelector('.password-text');
+            const icon = btn.querySelector('i');
+
+            if (mask.classList.contains('hidden')) {
+                // Esconde
+                mask.classList.remove('hidden');
+                text.classList.add('hidden');
+                icon.className = 'fas fa-eye';
+                btn.innerHTML = '<i class="fas fa-eye"></i> Ver';
+            } else {
+                // Mostra
+                mask.classList.add('hidden');
+                text.classList.remove('hidden');
+                icon.className = 'fas fa-eye-slash';
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar';
+            }
+        };
+
+        window.deleteEntry = function(id) {
+            // Em vez de window.confirm (bloqueado pelas regras), apagamos direto e mostramos aviso.
+            diaryEntries = diaryEntries.filter(e => e.id !== id);
+            renderEntries();
+            showMessage("Apagado", "A anotação foi apagada do seu caderninho.", "info");
+        };
+
+        // Inicializa garantindo que todos os modais de mensagens estejam ocultos
+        document.addEventListener('DOMContentLoaded', () => {
+            // Evitar zoom indesejado ao dar duplo toque em inputs no mobile (comum em idosos)
+            document.addEventListener('dblclick', function(event) {
+                event.preventDefault();
+            }, { passive: false });
+        });
+
     </script>
-
 </body>
 </html>
