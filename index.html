@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facilita Brasil - Ajudando você na Internet</title>
+    <title>Facilita Brasil - Acessibilidade e Tecnologia para Idosos</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -41,10 +41,10 @@
         *:focus-visible {
             outline: 4px solid #ffdf00 !important;
             outline-offset: 4px !important;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
-        /* Classes ativadas pelo menu de acessibilidade */
+        /* Botões Ampliados */
         .large-targets button, 
         .large-targets a, 
         .large-targets input,
@@ -54,11 +54,11 @@
             padding-left: 1.5rem !important;
             padding-right: 1.5rem !important;
             margin: 0.5rem 0 !important;
-            min-height: 60px !important;
-            font-size: 110% !important;
+            min-height: 64px !important;
+            font-size: 115% !important;
         }
 
-        /* Modo escuro (Alto Contraste) personalizado */
+        /* Modo escuro (Alto Contraste) */
         .dark body {
             background-color: #121212;
             color: #ffffff;
@@ -73,30 +73,29 @@
             color: #d1d5db !important;
         }
         .dark .bg-gray-100 {
-            background-color: #374151 !important;
+            background-color: #2a2a2a !important;
         }
-        .dark .border-gray-200 {
-            border-color: #4b5563 !important;
+        .dark .border-gray-200, .dark .border-gray-100 {
+            border-color: #374151 !important;
         }
 
         /* Destaque ao ler o texto (Hover Reader) */
         .reader-active *:hover {
-            background-color: rgba(255, 223, 0, 0.3) !important;
+            background-color: rgba(255, 223, 0, 0.35) !important;
             cursor: help !important;
-            outline: 2px solid #009c3b !important;
+            outline: 3px solid #009c3b !important;
         }
 
-        /* Utilitários para ocultar seções */
         .hidden-section {
             display: none !important;
         }
 
-        /* Custom Scrollbar para idosos - Mais grossa e visível */
+        /* Barra de rolagem acessível */
         ::-webkit-scrollbar {
             width: 16px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
+            background: #e5e7eb; 
         }
         ::-webkit-scrollbar-thumb {
             background: #009c3b; 
@@ -109,118 +108,166 @@
 </head>
 <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
 
+    <!-- Tela de Acesso Global (Bloqueia o site até a autenticação) -->
+    <div id="globalLoginScreen" class="fixed inset-0 bg-br-blue z-[200] flex flex-col items-center justify-center p-4 transition-opacity duration-500 overflow-y-auto">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-lg rounded-3xl shadow-2xl p-6 sm:p-10 text-center border-b-8 border-br-yellow my-auto">
+            <div class="bg-br-green w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full flex items-center justify-center shadow-lg mb-4 sm:mb-6 border-4 border-white">
+                <i class="fas fa-user-shield text-4xl sm:text-5xl text-white"></i>
+            </div>
+            
+            <h1 id="loginTitle" class="text-3xl sm:text-4xl font-bold text-br-blue dark:text-blue-400 mb-3">Bem-vindo ao Facilita BR</h1>
+            <p id="loginSubtitle" class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-6">Por favor, crie ou digite seu acesso seguro para prosseguir.</p>
+            
+            <!-- Formulário de Acesso -->
+            <div id="loginFormGroup" class="space-y-4 text-left">
+                <div id="nameFieldGroup">
+                    <label for="regName" class="block text-lg sm:text-xl font-bold mb-1">Qual é o seu nome completo?</label>
+                    <input type="text" id="regName" placeholder="Ex: Maria da Silva" class="w-full p-4 text-xl border-2 border-gray-300 rounded-xl focus:border-br-green focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+                
+                <div>
+                    <label for="regUsername" class="block text-lg sm:text-xl font-bold mb-1">Nome de Usuário (Apelido)</label>
+                    <input type="text" id="regUsername" placeholder="Ex: maria123" class="w-full p-4 text-xl border-2 border-gray-300 rounded-xl focus:border-br-green focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+
+                <div>
+                    <label for="regPassword" class="block text-lg sm:text-xl font-bold mb-1">Sua Senha de Acesso</label>
+                    <input type="password" id="regPassword" placeholder="Digite uma senha fácil de lembrar" class="w-full p-4 text-xl border-2 border-gray-300 rounded-xl focus:border-br-green focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+
+                <button id="btnLoginAction" class="w-full bg-br-yellow text-br-dark py-4 rounded-xl text-2xl font-bold hover:bg-yellow-400 transition-colors shadow-lg border-2 border-transparent focus:border-black mt-4">
+                    Entrar no Portal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu de Acessibilidade Flutuante -->
     <div class="fixed bottom-6 right-6 z-50">
         <!-- Botão Principal de Acessibilidade -->
-        <button id="btnA11y" aria-label="Abrir menu de acessibilidade" class="bg-br-blue text-white rounded-full w-20 h-20 flex items-center justify-center shadow-2xl hover:bg-blue-800 transition-colors border-4 border-white focus:ring-4 focus:ring-br-yellow">
-            <i class="fas fa-universal-access text-4xl"></i>
+        <button id="btnA11y" aria-label="Abrir opções de acessibilidade" class="bg-br-blue text-white rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center shadow-2xl hover:bg-blue-900 transition-transform active:scale-95 border-4 border-white focus:ring-4 focus:ring-br-yellow">
+            <i class="fas fa-universal-access text-3xl sm:text-4xl"></i>
         </button>
 
-        <!-- Menu/Modal de Acessibilidade (Oculto por padrão) -->
-        <div id="modalA11y" class="hidden absolute bottom-24 right-0 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-2xl border-2 border-br-green w-80 max-w-[90vw]">
+        <!-- Modal de Opções de Acessibilidade -->
+        <div id="modalA11y" class="hidden absolute bottom-20 sm:bottom-24 right-0 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-2xl border-4 border-br-green w-80 max-w-[90vw]">
             <h2 class="text-2xl font-bold mb-4 text-center border-b-2 border-br-yellow pb-2">Acessibilidade</h2>
             
             <div class="space-y-4">
                 <!-- Tamanho da Letra -->
-                <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg text-center">
-                    <p class="font-bold mb-2">Tamanho da Letra</p>
+                <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-xl text-center">
+                    <p class="font-bold mb-2 text-lg">Tamanho da Letra</p>
                     <div class="flex justify-center space-x-4">
-                        <button onclick="changeFontSize(-1)" class="bg-white dark:bg-gray-600 px-4 py-2 rounded shadow hover:bg-gray-200 border-2 border-gray-300 text-xl font-bold">A-</button>
-                        <button onclick="changeFontSize(1)" class="bg-white dark:bg-gray-600 px-4 py-2 rounded shadow hover:bg-gray-200 border-2 border-gray-300 text-2xl font-bold">A+</button>
+                        <button onclick="changeFontSize(-1)" class="bg-white dark:bg-gray-600 px-4 py-2 rounded-lg shadow hover:bg-gray-200 border-2 border-gray-300 text-xl font-bold">A-</button>
+                        <button onclick="changeFontSize(1)" class="bg-white dark:bg-gray-600 px-4 py-2 rounded-lg shadow hover:bg-gray-200 border-2 border-gray-300 text-2xl font-bold">A+</button>
                     </div>
                 </div>
 
-                <!-- Botões de Alternância -->
-                <button onclick="toggleHighContrast()" id="btnContrast" class="w-full bg-gray-100 dark:bg-gray-700 p-4 rounded-lg font-bold text-left flex justify-between items-center hover:bg-gray-200 border-2 border-transparent transition-colors">
-                    <span><i class="fas fa-adjust mr-2"></i> Alto Contraste</span>
+                <!-- Contraste -->
+                <button onclick="toggleHighContrast()" id="btnContrast" class="w-full bg-gray-100 dark:bg-gray-700 p-3 rounded-xl font-bold text-left flex justify-between items-center hover:bg-gray-200 transition-colors">
+                    <span><i class="fas fa-adjust mr-2 text-br-blue dark:text-yellow-400"></i> Alto Contraste</span>
                     <i class="fas fa-toggle-off text-2xl text-gray-400" id="iconContrast"></i>
                 </button>
 
-                <button onclick="toggleLargeTargets()" id="btnTargets" class="w-full bg-gray-100 dark:bg-gray-700 p-4 rounded-lg font-bold text-left flex justify-between items-center hover:bg-gray-200 border-2 border-transparent transition-colors">
-                    <span><i class="fas fa-mouse-pointer mr-2"></i> Botões Grandes</span>
+                <!-- Botões Grandes -->
+                <button onclick="toggleLargeTargets()" id="btnTargets" class="w-full bg-gray-100 dark:bg-gray-700 p-3 rounded-xl font-bold text-left flex justify-between items-center hover:bg-gray-200 transition-colors">
+                    <span><i class="fas fa-mouse-pointer mr-2 text-br-green"></i> Botões Grandes</span>
                     <i class="fas fa-toggle-off text-2xl text-gray-400" id="iconTargets"></i>
                 </button>
 
-                <button onclick="toggleSpeechReader()" id="btnSpeech" class="w-full bg-gray-100 dark:bg-gray-700 p-4 rounded-lg font-bold text-left flex justify-between items-center hover:bg-gray-200 border-2 border-transparent transition-colors">
-                    <span><i class="fas fa-volume-up mr-2"></i> Leitor de Voz</span>
+                <!-- Leitor de Voz -->
+                <button onclick="toggleSpeechReader()" id="btnSpeech" class="w-full bg-gray-100 dark:bg-gray-700 p-3 rounded-xl font-bold text-left flex justify-between items-center hover:bg-gray-200 transition-colors">
+                    <span><i class="fas fa-volume-up mr-2 text-br-blue"></i> Leitor de Voz</span>
                     <i class="fas fa-toggle-off text-2xl text-gray-400" id="iconSpeech"></i>
                 </button>
             </div>
             
-            <button id="closeA11y" class="mt-6 w-full bg-br-green text-white p-3 rounded-lg font-bold hover:bg-green-700">
+            <button id="closeA11y" class="mt-6 w-full bg-br-green text-white p-3 rounded-xl font-bold hover:bg-green-700 transition-colors text-lg">
                 Fechar Opções
             </button>
         </div>
     </div>
 
-    <div id="messageModal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[100] flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-md w-full text-center border-4 border-br-green shadow-2xl">
+    <!-- Modal de Mensagens Customizado (Substitui alert) -->
+    <div id="messageModal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[300] flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center border-4 border-br-green shadow-2xl">
             <i id="messageIcon" class="fas fa-info-circle text-6xl text-br-blue mb-4"></i>
-            <h3 id="messageTitle" class="text-3xl font-bold mb-4">Aviso</h3>
-            <p id="messageText" class="text-xl mb-8">Mensagem aqui</p>
+            <h3 id="messageTitle" class="text-3xl font-bold mb-3">Aviso</h3>
+            <p id="messageText" class="text-xl mb-6">Mensagem aqui</p>
             <button onclick="closeMessage()" class="w-full bg-br-blue text-white py-4 rounded-xl text-2xl font-bold hover:bg-blue-800 transition-colors">
                 Entendi
             </button>
         </div>
     </div>
 
+    <!-- Cabeçalho Principal -->
     <header class="bg-br-green text-white shadow-md border-b-8 border-br-yellow sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 py-4 sm:py-6">
+        <div class="max-w-6xl mx-auto px-4 py-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigate('inicio')" aria-label="Ir para a página inicial">
-                    <div class="bg-white text-br-green rounded-full w-14 h-14 flex items-center justify-center shadow-inner">
-                        <i class="fas fa-hands-helping text-3xl"></i>
+                <div class="flex items-center justify-between w-full md:w-auto">
+                    <div class="flex items-center space-x-3 cursor-pointer" onclick="navigate('inicio')" aria-label="Ir para a página inicial">
+                        <div class="bg-white text-br-green rounded-full w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-inner">
+                            <i class="fas fa-hands-helping text-2xl sm:text-3xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight leading-none">Facilita BR</h1>
+                            <span id="userGreeting" class="text-sm sm:text-base text-br-yellow font-semibold"></span>
+                        </div>
                     </div>
-                    <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Facilita BR</h1>
+
+                    <!-- Botão Menu Mobile -->
+                    <button id="btnMobileMenu" class="md:hidden bg-white text-br-green px-4 py-2 rounded-xl font-bold text-lg flex items-center gap-2">
+                        <i class="fas fa-bars"></i> Menu
+                    </button>
                 </div>
 
-                <!-- Botão Menu Mobile -->
-                <button id="btnMobileMenu" class="md:hidden bg-white text-br-green px-4 py-2 rounded font-bold text-xl w-full">
-                    <i class="fas fa-bars"></i> Menu Principal
-                </button>
-
-                <nav id="mainNav" class="hidden md:flex flex-col md:flex-row gap-2 w-full md:w-auto mt-4 md:mt-0">
-                    <button onclick="navigate('videos')" class="nav-btn bg-green-800 hover:bg-green-900 px-5 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
+                <nav id="mainNav" class="hidden md:flex flex-col md:flex-row gap-2 w-full md:w-auto mt-2 md:mt-0">
+                    <button onclick="navigate('inicio')" class="nav-btn bg-green-800 hover:bg-green-900 px-4 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
+                        <i class="fas fa-home mr-2"></i> Início
+                    </button>
+                    <button onclick="navigate('videos')" class="nav-btn bg-green-800 hover:bg-green-900 px-4 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
                         <i class="fas fa-play-circle mr-2"></i> Vídeos
                     </button>
-                    <button onclick="navigate('instrucoes')" class="nav-btn bg-green-800 hover:bg-green-900 px-5 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
+                    <button onclick="navigate('instrucoes')" class="nav-btn bg-green-800 hover:bg-green-900 px-4 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
                         <i class="fas fa-list-ol mr-2"></i> Passo a Passo
                     </button>
-                    <button onclick="navigate('links')" class="nav-btn bg-green-800 hover:bg-green-900 px-5 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
-                        <i class="fas fa-external-link-alt mr-2"></i> Acesso Direto
+                    <button onclick="navigate('links')" class="nav-btn bg-green-800 hover:bg-green-900 px-4 py-3 rounded-xl font-semibold text-lg transition-colors border-2 border-transparent focus:border-white w-full text-left md:text-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> Atalhos
                     </button>
-                    <button onclick="navigate('diario')" class="nav-btn bg-br-yellow text-br-dark hover:bg-yellow-500 px-5 py-3 rounded-xl font-bold text-lg transition-colors shadow-md border-2 border-transparent focus:border-br-dark w-full text-left md:text-center">
-                        <i class="fas fa-book-open mr-2"></i> Diário de Senhas
+                    <button onclick="navigate('diario')" class="nav-btn bg-br-yellow text-br-dark hover:bg-yellow-400 px-4 py-3 rounded-xl font-bold text-lg transition-colors shadow-md border-2 border-transparent focus:border-br-dark w-full text-left md:text-center">
+                        <i class="fas fa-book-open mr-2"></i> Caderno de Senhas
                     </button>
                 </nav>
             </div>
         </div>
     </header>
 
+    <!-- Conteúdo Principal -->
     <main class="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
 
+        <!-- Seção Início -->
         <section id="inicio" class="content-section space-y-8 animate-fade-in">
-            <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border-t-8 border-br-blue flex flex-col md:flex-row items-center gap-8">
+            <div class="bg-white dark:bg-gray-800 p-6 sm:p-10 rounded-3xl shadow-lg border-t-8 border-br-blue flex flex-col md:flex-row items-center gap-8">
                 <div class="md:w-2/3 space-y-6">
-                    <h2 class="text-4xl md:text-5xl font-bold text-br-blue dark:text-blue-400">
-                        Bem-vindo ao Facilita BR!
+                    <h2 class="text-3xl sm:text-5xl font-bold text-br-blue dark:text-blue-400 leading-tight">
+                        Seja bem-vindo ao Facilita BR!
                     </h2>
-                    <p class="text-2xl leading-relaxed">
-                        Nós sabemos que a internet pode parecer confusa às vezes. Tudo mudou muito rápido, não é?
+                    <p class="text-xl sm:text-2xl leading-relaxed">
+                        Entendemos que o mundo digital pode parecer confuso e acelerado às vezes.
                     </p>
-                    <p class="text-2xl leading-relaxed">
-                        Por isso, criamos este espaço <strong>seguro e simples</strong> para você. Aqui você encontra atalhos fáceis, vídeos que explicam tudo com calma e um caderninho para guardar suas senhas sem medo de esquecer.
+                    <p class="text-xl sm:text-2xl leading-relaxed">
+                        Este espaço foi planejado para você aprender no seu próprio ritmo, com instruções simples, vídeos diretos e um local seguro para consultar suas senhas sempre que precisar.
                     </p>
-                    <div class="pt-4 flex flex-wrap gap-4">
+                    <div class="pt-2 flex flex-wrap gap-4">
                         <button onclick="navigate('videos')" class="bg-br-blue text-white px-8 py-4 rounded-xl text-2xl font-bold shadow-lg hover:bg-blue-800 transition transform hover:scale-105 flex items-center">
-                            <i class="fas fa-play mr-3"></i> Quero ver os Vídeos
+                            <i class="fas fa-play mr-3"></i> Assistir aos Vídeos
                         </button>
                     </div>
                 </div>
                 <div class="md:w-1/3 flex justify-center">
-                    <!-- Imagem representativa acolhedora -->
-                    <div class="w-64 h-64 bg-br-yellow rounded-full flex items-center justify-center shadow-xl border-8 border-white dark:border-gray-700">
-                        <i class="fas fa-hands-helping text-9xl text-br-green"></i>
+                    <div class="w-56 h-56 sm:w-64 sm:h-64 bg-br-yellow rounded-full flex items-center justify-center shadow-xl border-8 border-white dark:border-gray-700">
+                        <i class="fas fa-hands-helping text-8xl text-br-green"></i>
                     </div>
                 </div>
             </div>
@@ -228,33 +275,34 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 text-center cursor-pointer hover:shadow-xl transition" onclick="navigate('instrucoes')">
                     <div class="text-5xl text-br-green mb-4"><i class="fas fa-glasses"></i></div>
-                    <h3 class="text-2xl font-bold mb-2">Tudo Explicado</h3>
-                    <p class="text-xl">Textos grandes ensinando o passo a passo de cada aplicativo.</p>
+                    <h3 class="text-2xl font-bold mb-2">Instruções Claras</h3>
+                    <p class="text-xl">Textos em tamanho grande ensinando como acessar os serviços do governo.</p>
                 </div>
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 text-center cursor-pointer hover:shadow-xl transition" onclick="navigate('links')">
                     <div class="text-5xl text-br-blue mb-4"><i class="fas fa-mouse-pointer"></i></div>
-                    <h3 class="text-2xl font-bold mb-2">Atalhos Seguros</h3>
-                    <p class="text-xl">Botões grandes que levam você direto para o site oficial.</p>
+                    <h3 class="text-2xl font-bold mb-2">Atalhos Diretos</h3>
+                    <p class="text-xl">Botões fáceis para ir direto aos sites oficiais do Gov.br, INSS e CNH.</p>
                 </div>
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 text-center cursor-pointer hover:shadow-xl transition" onclick="navigate('diario')">
                     <div class="text-5xl text-br-yellow mb-4"><i class="fas fa-lock"></i></div>
-                    <h3 class="text-2xl font-bold mb-2">Suas Senhas</h3>
-                    <p class="text-xl">Um diário só seu para anotar as senhas que sempre esquecemos.</p>
+                    <h3 class="text-2xl font-bold mb-2">Caderno de Senhas</h3>
+                    <p class="text-xl">Guarde seus logins e senhas com segurança para nunca mais esquecer.</p>
                 </div>
             </div>
         </section>
 
+        <!-- Seção Vídeos -->
         <section id="videos" class="hidden-section content-section space-y-8 animate-fade-in">
             <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-l-8 border-br-blue">
-                <h2 class="text-4xl font-bold mb-4"><i class="fas fa-play-circle text-br-blue mr-3"></i> Vídeos Tutoriais</h2>
-                <p class="text-2xl mb-2">Assista aos vídeos abaixo. Eles explicam com calma como usar os serviços do governo.</p>
-                <p class="text-xl text-gray-600 dark:text-gray-400">Dica: Clique no meio do vídeo para dar o 'play' (iniciar).</p>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-3"><i class="fas fa-play-circle text-br-blue mr-3"></i> Vídeos Tutoriais</h2>
+                <p class="text-xl sm:text-2xl mb-2">Assista aos vídeos abaixo. Eles explicam detalhadamente como usar os serviços digitais.</p>
+                <p class="text-lg text-gray-600 dark:text-gray-400">Dica: Clique no botão de reprodução no centro do vídeo para iniciar.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Video gov.br -->
                 <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border-2 border-gray-100">
-                    <h3 class="text-3xl font-bold mb-4 text-center">Como acessar o Gov.br</h3>
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-center">Como acessar o Gov.br</h3>
                     <div class="relative w-full overflow-hidden rounded-xl" style="padding-top: 56.25%;">
                         <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/I-wkyl5VQPo" title="Tutorial gov.br" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
@@ -262,15 +310,15 @@
 
                 <!-- Video Meu INSS -->
                 <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border-2 border-gray-100">
-                    <h3 class="text-3xl font-bold mb-4 text-center">Como usar o Meu INSS</h3>
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-center">Como usar o Meu INSS</h3>
                     <div class="relative w-full overflow-hidden rounded-xl" style="padding-top: 56.25%;">
                         <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/iU4V4l_qd98" title="Tutorial Meu INSS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
 
                 <!-- Video CNH Digital -->
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border-2 border-gray-100 lg:col-span-2 lg:w-2/3 lg:mx-auto">
-                    <h3 class="text-3xl font-bold mb-4 text-center">Como baixar a CNH Digital</h3>
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border-2 border-gray-100 lg:col-span-2 lg:w-3/4 lg:mx-auto">
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-center">Como baixar a CNH Digital</h3>
                     <div class="relative w-full overflow-hidden rounded-xl" style="padding-top: 56.25%;">
                         <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/eZH11dU23DM" title="Tutorial CNH Digital" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
@@ -278,10 +326,11 @@
             </div>
         </section>
 
+        <!-- Seção Instruções -->
         <section id="instrucoes" class="hidden-section content-section space-y-8 animate-fade-in">
             <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-l-8 border-br-green">
-                <h2 class="text-4xl font-bold mb-4"><i class="fas fa-list-ol text-br-green mr-3"></i> Passo a Passo Escrito</h2>
-                <p class="text-2xl">Prefere ler? Aqui estão as instruções detalhadas em letras grandes.</p>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-3"><i class="fas fa-list-ol text-br-green mr-3"></i> Passo a Passo Escrito</h2>
+                <p class="text-xl sm:text-2xl">Acompanhe as orientações passo a passo em texto grande e de fácil leitura.</p>
             </div>
 
             <div class="space-y-6">
@@ -290,12 +339,12 @@
                     <div class="bg-blue-100 dark:bg-blue-900 p-6">
                         <h3 class="text-3xl font-bold text-br-blue dark:text-blue-300">Meu INSS</h3>
                     </div>
-                    <div class="p-6 space-y-4 text-2xl">
-                        <p><strong>1.</strong> Clique no botão de acesso direto ao INSS ou baixe o aplicativo no celular.</p>
-                        <p><strong>2.</strong> Na tela inicial, clique em <strong>"Entrar com gov.br"</strong> (um botão azul).</p>
-                        <p><strong>3.</strong> Digite o seu <strong>CPF</strong> (só os números) e clique em Continuar.</p>
-                        <p><strong>4.</strong> Digite a sua <strong>senha</strong> do gov.br e clique em Entrar.</p>
-                        <p><strong>5.</strong> Pronto! Agora você pode ver sua aposentadoria e extratos.</p>
+                    <div class="p-6 space-y-4 text-xl sm:text-2xl">
+                        <p><strong>1.</strong> Clique na aba "Atalhos" no menu do site ou baixe o aplicativo no celular.</p>
+                        <p><strong>2.</strong> Na tela inicial, clique no botão azul <strong>"Entrar com gov.br"</strong>.</p>
+                        <p><strong>3.</strong> Digite os números do seu <strong>CPF</strong> e clique em Continuar.</p>
+                        <p><strong>4.</strong> Digite a sua <strong>senha</strong> cadastrada no gov.br e clique em Entrar.</p>
+                        <p><strong>5.</strong> Pronto! Agora você pode consultar extratos, agendamentos e benefícios.</p>
                     </div>
                 </div>
 
@@ -304,164 +353,139 @@
                     <div class="bg-green-100 dark:bg-green-900 p-6">
                         <h3 class="text-3xl font-bold text-br-green dark:text-green-300">CNH Digital</h3>
                     </div>
-                    <div class="p-6 space-y-4 text-2xl">
-                        <p><strong>1.</strong> No seu celular, procure pela lojinha de aplicativos e baixe o <strong>"Carteira Digital de Trânsito"</strong>.</p>
-                        <p><strong>2.</strong> Abra o aplicativo e clique em <strong>"Entrar com gov.br"</strong>.</p>
-                        <p><strong>3.</strong> Coloque seu CPF e sua senha.</p>
-                        <p><strong>4.</strong> Para adicionar o documento, clique em <strong>"Habilitação"</strong> e aponte a câmera do celular para o código (QR Code) atrás da sua CNH de papel.</p>
+                    <div class="p-6 space-y-4 text-xl sm:text-2xl">
+                        <p><strong>1.</strong> Na loja de aplicativos do celular, pesquise por <strong>"Carteira Digital de Trânsito"</strong>.</p>
+                        <p><strong>2.</strong> Abra o aplicativo instalado e clique no botão <strong>"Entrar com gov.br"</strong>.</p>
+                        <p><strong>3.</strong> Insira seu CPF e sua senha do gov.br.</p>
+                        <p><strong>4.</strong> Para incluir sua carteira, clique em <strong>"Habilitação"</strong> e aponte a câmera para o QR Code no verso da sua CNH física.</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Seção Links (Atalhos) -->
         <section id="links" class="hidden-section content-section space-y-8 animate-fade-in">
             <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-l-8 border-br-yellow">
-                <h2 class="text-4xl font-bold mb-4"><i class="fas fa-external-link-alt text-yellow-600 mr-3"></i> Acesso Direto (Atalhos)</h2>
-                <p class="text-2xl">Clique nos botões gigantes abaixo para ir diretamente para a página oficial do governo.</p>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-3"><i class="fas fa-external-link-alt text-yellow-600 mr-3"></i> Atalhos de Acesso Direto</h2>
+                <p class="text-xl sm:text-2xl">Clique nos botões abaixo para acessar os portais oficiais com segurança.</p>
             </div>
 
             <div class="flex flex-col gap-6 w-full max-w-3xl mx-auto">
-                <a href="https://acesso.gov.br" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-gray-700 border-4 border-br-blue rounded-3xl p-8 flex items-center justify-between shadow-xl hover:bg-blue-50 dark:hover:bg-gray-600 transition group focus:ring-8 focus:ring-br-yellow focus:outline-none">
-                    <div class="flex items-center gap-6">
-                        <div class="bg-br-blue text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-md">
+                <a href="https://acesso.gov.br" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-gray-700 border-4 border-br-blue rounded-3xl p-6 sm:p-8 flex items-center justify-between shadow-xl hover:bg-blue-50 dark:hover:bg-gray-600 transition group focus:ring-8 focus:ring-br-yellow focus:outline-none">
+                    <div class="flex items-center gap-4 sm:gap-6">
+                        <div class="bg-br-blue text-white w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center text-3xl sm:text-4xl shadow-md shrink-0">
                             <i class="fas fa-id-card"></i>
                         </div>
                         <div>
-                            <h3 class="text-4xl font-bold text-br-blue dark:text-blue-300 group-hover:underline">Gov.br</h3>
-                            <p class="text-2xl text-gray-600 dark:text-gray-300 mt-2">Acesso unificado do Governo</p>
+                            <h3 class="text-3xl sm:text-4xl font-bold text-br-blue dark:text-blue-300 group-hover:underline">Gov.br</h3>
+                            <p class="text-lg sm:text-2xl text-gray-600 dark:text-gray-300 mt-1">Portal Unificado do Governo</p>
                         </div>
                     </div>
-                    <i class="fas fa-chevron-right text-5xl text-gray-400 group-hover:text-br-blue"></i>
+                    <i class="fas fa-chevron-right text-3xl sm:text-5xl text-gray-400 group-hover:text-br-blue"></i>
                 </a>
 
-                <a href="https://meu.inss.gov.br/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-gray-700 border-4 border-br-green rounded-3xl p-8 flex items-center justify-between shadow-xl hover:bg-green-50 dark:hover:bg-gray-600 transition group focus:ring-8 focus:ring-br-yellow focus:outline-none">
-                    <div class="flex items-center gap-6">
-                        <div class="bg-br-green text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-md">
+                <a href="https://meu.inss.gov.br/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-gray-700 border-4 border-br-green rounded-3xl p-6 sm:p-8 flex items-center justify-between shadow-xl hover:bg-green-50 dark:hover:bg-gray-600 transition group focus:ring-8 focus:ring-br-yellow focus:outline-none">
+                    <div class="flex items-center gap-4 sm:gap-6">
+                        <div class="bg-br-green text-white w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center text-3xl sm:text-4xl shadow-md shrink-0">
                             <i class="fas fa-hands-helping"></i>
                         </div>
                         <div>
-                            <h3 class="text-4xl font-bold text-br-green dark:text-green-400 group-hover:underline">Meu INSS</h3>
-                            <p class="text-2xl text-gray-600 dark:text-gray-300 mt-2">Aposentadoria, benefícios e extratos</p>
+                            <h3 class="text-3xl sm:text-4xl font-bold text-br-green dark:text-green-400 group-hover:underline">Meu INSS</h3>
+                            <p class="text-lg sm:text-2xl text-gray-600 dark:text-gray-300 mt-1">Aposentadoria e Benefícios</p>
                         </div>
                     </div>
-                    <i class="fas fa-chevron-right text-5xl text-gray-400 group-hover:text-br-green"></i>
+                    <i class="fas fa-chevron-right text-3xl sm:text-5xl text-gray-400 group-hover:text-br-green"></i>
                 </a>
 
-                <a href="https://campanhas.serpro.gov.br/cdt/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-gray-700 border-4 border-gray-800 dark:border-gray-400 rounded-3xl p-8 flex items-center justify-between shadow-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition group focus:ring-8 focus:ring-br-yellow focus:outline-none">
-                    <div class="flex items-center gap-6">
-                        <div class="bg-gray-800 text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-md">
+                <a href="https://campanhas.serpro.gov.br/cdt/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-gray-700 border-4 border-gray-800 dark:border-gray-400 rounded-3xl p-6 sm:p-8 flex items-center justify-between shadow-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition group focus:ring-8 focus:ring-br-yellow focus:outline-none">
+                    <div class="flex items-center gap-4 sm:gap-6">
+                        <div class="bg-gray-800 text-white w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center text-3xl sm:text-4xl shadow-md shrink-0">
                             <i class="fas fa-car"></i>
                         </div>
                         <div>
-                            <h3 class="text-4xl font-bold text-gray-800 dark:text-white group-hover:underline">CNH Digital</h3>
-                            <p class="text-2xl text-gray-600 dark:text-gray-300 mt-2">Sua carteira de motorista no celular</p>
+                            <h3 class="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-white group-hover:underline">CNH Digital</h3>
+                            <p class="text-lg sm:text-2xl text-gray-600 dark:text-gray-300 mt-1">Documento de Motorista Digital</p>
                         </div>
                     </div>
-                    <i class="fas fa-chevron-right text-5xl text-gray-400 group-hover:text-gray-800"></i>
+                    <i class="fas fa-chevron-right text-3xl sm:text-5xl text-gray-400 group-hover:text-gray-800"></i>
                 </a>
             </div>
         </section>
 
+        <!-- Seção Diário de Senhas -->
         <section id="diario" class="hidden-section content-section animate-fade-in max-w-4xl mx-auto">
-            
-            <!-- Tela de Bloqueio do Diário -->
-            <div id="diaryLockScreen" class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border-t-8 border-br-yellow text-center space-y-6">
-                <i class="fas fa-lock text-7xl text-br-yellow mb-4"></i>
-                <h2 class="text-4xl font-bold">Seu Diário de Senhas</h2>
-                <p class="text-2xl">Este é um espaço seguro. Crie uma senha de 4 números (ou digite a que já criou nesta visita) para abrir o caderninho.</p>
-                
-                <div class="max-w-xs mx-auto space-y-4">
-                    <input type="password" id="diaryPin" maxlength="4" placeholder="Ex: 1234" class="w-full text-center text-4xl p-4 border-4 border-gray-300 rounded-xl focus:border-br-yellow focus:outline-none bg-gray-50 dark:bg-gray-700 dark:text-white" pattern="\d*">
-                    
-                    <button onclick="unlockDiary()" class="w-full bg-br-yellow text-br-dark py-4 rounded-xl text-3xl font-bold hover:bg-yellow-500 transition-colors shadow-lg border-2 border-transparent focus:border-black">
-                        Abrir Diário
-                    </button>
-                </div>
-                <p class="text-lg text-gray-500 mt-4">Aviso: Por segurança, ao fechar o site as senhas são apagadas neste modo simples.</p>
-            </div>
-
-            <!-- Conteúdo do Diário (Oculto até destrancar) -->
-            <div id="diaryContent" class="hidden space-y-8">
+            <div id="diaryContent" class="space-y-8">
                 <div class="flex justify-between items-center bg-br-yellow text-br-dark p-6 rounded-2xl shadow-lg">
-                    <h2 class="text-4xl font-bold"><i class="fas fa-book-open mr-3"></i> Meu Caderninho</h2>
-                    <button onclick="lockDiary()" class="bg-white text-br-dark px-4 py-2 rounded-lg font-bold text-xl hover:bg-gray-200">
-                        <i class="fas fa-lock"></i> Fechar
-                    </button>
+                    <h2 class="text-3xl sm:text-4xl font-bold"><i class="fas fa-book-open mr-3"></i> Meu Caderno de Senhas</h2>
                 </div>
 
-                <!-- Formulário para Adicionar -->
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-2 border-gray-200">
-                    <h3 class="text-3xl font-bold mb-6">Anotar nova senha</h3>
+                <!-- Form Adicionar Senha -->
+                <div class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow border-2 border-gray-200">
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-6">Anotar nova senha</h3>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-2xl font-bold mb-2">Qual é o site/aplicativo?</label>
-                            <input type="text" id="entrySite" placeholder="Ex: Gov.br, Facebook, INSS" class="w-full p-4 border-2 border-gray-300 rounded-xl text-2xl dark:bg-gray-700 dark:border-gray-600 focus:border-br-blue focus:outline-none">
+                            <label for="entrySite" class="block text-xl sm:text-2xl font-bold mb-2">Qual é o site ou aplicativo?</label>
+                            <input type="text" id="entrySite" placeholder="Ex: Gov.br, Facebook, INSS" class="w-full p-4 border-2 border-gray-300 rounded-xl text-xl sm:text-2xl dark:bg-gray-700 dark:border-gray-600 focus:border-br-blue focus:outline-none dark:text-white">
                         </div>
                         <div>
-                            <label class="block text-2xl font-bold mb-2">Qual é o Login (CPF ou Email)?</label>
-                            <input type="text" id="entryLogin" placeholder="Ex: 123.456.789-00" class="w-full p-4 border-2 border-gray-300 rounded-xl text-2xl dark:bg-gray-700 dark:border-gray-600 focus:border-br-blue focus:outline-none">
+                            <label for="entryLogin" class="block text-xl sm:text-2xl font-bold mb-2">Login (CPF, Email ou Usuário)</label>
+                            <input type="text" id="entryLogin" placeholder="Ex: 123.456.789-00" class="w-full p-4 border-2 border-gray-300 rounded-xl text-xl sm:text-2xl dark:bg-gray-700 dark:border-gray-600 focus:border-br-blue focus:outline-none dark:text-white">
                         </div>
                         <div>
-                            <label class="block text-2xl font-bold mb-2">Qual é a Senha?</label>
-                            <input type="text" id="entryPassword" placeholder="Sua senha aqui" class="w-full p-4 border-2 border-gray-300 rounded-xl text-2xl dark:bg-gray-700 dark:border-gray-600 focus:border-br-blue focus:outline-none">
+                            <label for="entryPassword" class="block text-xl sm:text-2xl font-bold mb-2">Sua Senha</label>
+                            <input type="text" id="entryPassword" placeholder="Sua senha aqui" class="w-full p-4 border-2 border-gray-300 rounded-xl text-xl sm:text-2xl dark:bg-gray-700 dark:border-gray-600 focus:border-br-blue focus:outline-none dark:text-white">
                         </div>
-                        <button onclick="addDiaryEntry()" class="w-full bg-br-green text-white py-4 rounded-xl text-3xl font-bold hover:bg-green-700 transition-colors shadow mt-4">
+                        <button onclick="window.addDiaryEntry()" class="w-full bg-br-green text-white py-4 rounded-xl text-2xl sm:text-3xl font-bold hover:bg-green-700 transition-colors shadow mt-4">
                             <i class="fas fa-save mr-2"></i> Salvar no Caderno
                         </button>
                     </div>
                 </div>
 
                 <!-- Lista de Senhas -->
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border-2 border-gray-200">
-                    <h3 class="text-3xl font-bold mb-6">Senhas Salvas</h3>
+                <div class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow border-2 border-gray-200">
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-6">Senhas Salvas</h3>
                     <div id="entriesList" class="space-y-4">
-                        <!-- Itens inseridos via JS -->
+                        <p class="text-xl text-gray-500 italic p-4 text-center">Carregando suas senhas salvas...</p>
                     </div>
                 </div>
             </div>
-
         </section>
 
     </main>
 
     <footer class="bg-gray-800 text-white text-center p-6 mt-8">
-        <p class="text-xl">Projeto Acessibilidade Digital - Feito para facilitar o seu dia a dia.</p>
+        <p class="text-lg sm:text-xl">Facilita BR - Tecnologia e Acessibilidade com Respeito à Terceira Idade.</p>
     </footer>
 
     <script>
-        // === Navegação ===
+        window.diaryEntries = [];
+
         function navigate(sectionId) {
-            // Oculta todas as seções
             document.querySelectorAll('.content-section').forEach(sec => {
                 sec.classList.add('hidden-section');
             });
-            // Mostra a seção clicada
             const target = document.getElementById(sectionId);
             if (target) {
                 target.classList.remove('hidden-section');
-                // Rola para o topo suavemente
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            // Fecha menu mobile se estiver aberto
             const nav = document.getElementById('mainNav');
             if(!nav.classList.contains('hidden') && window.innerWidth < 768) {
                 nav.classList.add('hidden');
             }
         }
 
-        // Menu Mobile Toggle
         document.getElementById('btnMobileMenu').addEventListener('click', () => {
             document.getElementById('mainNav').classList.toggle('hidden');
         });
 
-        // === Custom Modal (Substituto do Alert) ===
-        function showMessage(title, text, type = 'info') {
+        window.showMessage = function(title, text, type = 'info') {
             document.getElementById('messageTitle').innerText = title;
             document.getElementById('messageText').innerText = text;
             
             const icon = document.getElementById('messageIcon');
-            icon.className = 'fas text-6xl mb-4 '; // reseta
+            icon.className = 'fas text-6xl mb-4 ';
             
             if (type === 'error') {
                 icon.className += 'fa-exclamation-triangle text-red-500';
@@ -478,37 +502,26 @@
             document.getElementById('messageModal').classList.add('hidden');
         }
 
-        // === Menu de Acessibilidade Flutuante ===
         const btnA11y = document.getElementById('btnA11y');
         const modalA11y = document.getElementById('modalA11y');
         const closeA11y = document.getElementById('closeA11y');
 
-        btnA11y.addEventListener('click', () => {
-            modalA11y.classList.toggle('hidden');
-        });
-        closeA11y.addEventListener('click', () => {
-            modalA11y.classList.add('hidden');
-        });
+        btnA11y.addEventListener('click', () => modalA11y.classList.toggle('hidden'));
+        closeA11y.addEventListener('click', () => modalA11y.classList.add('hidden'));
 
-        // === Funções de Acessibilidade ===
-
-        // 1. Tamanho da Letra
-        let currentZoom = 0; // -1, 0, 1, 2, 3...
+        let currentZoom = 0;
         const rootHtml = document.documentElement;
         
         function changeFontSize(step) {
-            const baseSize = 20; // px (tamanho base grande para idosos)
+            const baseSize = 20; 
             currentZoom += step;
-            
-            // Limites (muito pequeno ou absurdamente grande)
             if (currentZoom < -2) currentZoom = -2;
             if (currentZoom > 5) currentZoom = 5;
 
-            const newSize = baseSize + (currentZoom * 4); // aumenta de 4 em 4 px
+            const newSize = baseSize + (currentZoom * 4);
             rootHtml.style.fontSize = `${newSize}px`;
         }
 
-        // 2. Alto Contraste (Dark Mode)
         let isHighContrast = false;
         function toggleHighContrast() {
             isHighContrast = !isHighContrast;
@@ -516,16 +529,15 @@
             
             if (isHighContrast) {
                 rootHtml.classList.add('dark');
-                icon.classList.remove('fa-toggle-off', 'text-gray-400');
-                icon.classList.add('fa-toggle-on', 'text-br-green');
+                icon.classList.replace('fa-toggle-off', 'fa-toggle-on');
+                icon.classList.replace('text-gray-400', 'text-br-green');
             } else {
                 rootHtml.classList.remove('dark');
-                icon.classList.add('fa-toggle-off', 'text-gray-400');
-                icon.classList.remove('fa-toggle-on', 'text-br-green');
+                icon.classList.replace('fa-toggle-on', 'fa-toggle-off');
+                icon.classList.replace('text-br-green', 'text-gray-400');
             }
         }
 
-        // 3. Áreas de Clique Ampliadas (Botões Grandes)
         let isLargeTargets = false;
         function toggleLargeTargets() {
             isLargeTargets = !isLargeTargets;
@@ -533,21 +545,19 @@
             
             if (isLargeTargets) {
                 document.body.classList.add('large-targets');
-                icon.classList.remove('fa-toggle-off', 'text-gray-400');
-                icon.classList.add('fa-toggle-on', 'text-br-green');
+                icon.classList.replace('fa-toggle-off', 'fa-toggle-on');
+                icon.classList.replace('text-gray-400', 'text-br-green');
             } else {
                 document.body.classList.remove('large-targets');
-                icon.classList.add('fa-toggle-off', 'text-gray-400');
-                icon.classList.remove('fa-toggle-on', 'text-br-green');
+                icon.classList.replace('fa-toggle-on', 'fa-toggle-off');
+                icon.classList.replace('text-br-green', 'text-gray-400');
             }
         }
 
-        // 4. Leitor de Voz (Hover to Speech)
         let isReaderActive = false;
-        
         function toggleSpeechReader() {
             if (!('speechSynthesis' in window)) {
-                showMessage("Aviso", "Seu navegador não suporta leitura de voz.", "error");
+                window.showMessage("Aviso", "Seu navegador não possui suporte para leitura de voz.", "error");
                 return;
             }
             
@@ -556,118 +566,46 @@
             
             if (isReaderActive) {
                 document.body.classList.add('reader-active');
-                icon.classList.remove('fa-toggle-off', 'text-gray-400');
-                icon.classList.add('fa-toggle-on', 'text-br-green');
-                showMessage("Leitor Ativado", "Passe a setinha do mouse (ou clique e segure no celular) sobre os textos para ouvir.", "info");
+                icon.classList.replace('fa-toggle-off', 'fa-toggle-on');
+                icon.classList.replace('text-gray-400', 'text-br-green');
+                window.showMessage("Leitor de Voz Ativado", "Passe o cursor sobre os textos para ouvir a leitura.", "info");
             } else {
                 document.body.classList.remove('reader-active');
-                icon.classList.add('fa-toggle-off', 'text-gray-400');
-                icon.classList.remove('fa-toggle-on', 'text-br-green');
+                icon.classList.replace('fa-toggle-on', 'fa-toggle-off');
+                icon.classList.replace('text-br-green', 'text-gray-400');
                 window.speechSynthesis.cancel();
             }
         }
 
-        // Lógica do Hover para o Leitor
         document.body.addEventListener('mouseover', function(e) {
             if (!isReaderActive) return;
-            
             const target = e.target;
-            // Lê apenas elementos de texto diretos para não ler blocos gigantes de uma vez
             const validTags = ['P', 'H1', 'H2', 'H3', 'H4', 'SPAN', 'BUTTON', 'A', 'LI', 'LABEL'];
             
             if (validTags.includes(target.tagName)) {
                 const text = target.innerText || target.textContent;
-                if (text.trim().length > 0) {
-                    window.speechSynthesis.cancel(); // Para a fala anterior
+                if (text && text.trim().length > 0) {
+                    window.speechSynthesis.cancel();
                     const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'pt-BR'; // Português do Brasil
-                    utterance.rate = 0.9; // Um pouco mais lento para melhor compreensão
-                    utterance.pitch = 1;
+                    utterance.lang = 'pt-BR';
+                    utterance.rate = 0.85;
                     window.speechSynthesis.speak(utterance);
                 }
             }
         });
 
-        document.body.addEventListener('mouseout', function(e) {
-            if (isReaderActive) {
-                // Ao tirar o mouse, se quiser pode parar. Mas pode ser abrupto. 
-                // window.speechSynthesis.cancel(); 
-            }
-        });
-
-        
-        // Estado do Diário
-        let savedPin = null; // Para esta sessão
-        let diaryEntries = []; 
-
-        function unlockDiary() {
-            const pinInput = document.getElementById('diaryPin').value;
-            
-            if (pinInput.length < 4) {
-                showMessage("Senha curta", "Por favor, digite pelo menos 4 números.", "error");
-                return;
-            }
-
-            if (savedPin === null) {
-                // Primeira vez abrindo nesta sessão, define a senha
-                savedPin = pinInput;
-                openDiaryContent();
-                showMessage("Diário Aberto", "Senha gravada para este acesso. Bem-vindo ao seu caderninho!", "success");
-            } else {
-                // Já tem senha, verifica se confere
-                if (pinInput === savedPin) {
-                    openDiaryContent();
-                } else {
-                    showMessage("Erro", "A senha não confere com a que você criou ao abrir. Tente novamente.", "error");
-                }
-            }
-            document.getElementById('diaryPin').value = '';
-        }
-
-        function openDiaryContent() {
-            document.getElementById('diaryLockScreen').classList.add('hidden');
-            document.getElementById('diaryContent').classList.remove('hidden');
-            renderEntries();
-        }
-
-        function lockDiary() {
-            document.getElementById('diaryContent').classList.add('hidden');
-            document.getElementById('diaryLockScreen').classList.remove('hidden');
-        }
-
-        function addDiaryEntry() {
-            const site = document.getElementById('entrySite').value.trim();
-            const login = document.getElementById('entryLogin').value.trim();
-            const password = document.getElementById('entryPassword').value.trim();
-
-            if (!site || !login || !password) {
-                showMessage("Atenção", "Por favor, preencha todos os campos (Site, Login e Senha) antes de salvar.", "error");
-                return;
-            }
-
-            diaryEntries.push({ site, login, password, id: Date.now() });
-            
-            // Limpa form
-            document.getElementById('entrySite').value = '';
-            document.getElementById('entryLogin').value = '';
-            document.getElementById('entryPassword').value = '';
-
-            renderEntries();
-            showMessage("Salvo!", "Sua senha foi guardada no caderninho.", "success");
-        }
-
-        function renderEntries() {
+        window.renderEntries = function() {
             const list = document.getElementById('entriesList');
             list.innerHTML = '';
 
-            if (diaryEntries.length === 0) {
-                list.innerHTML = '<p class="text-xl text-gray-500 italic p-4 text-center">Seu caderno está vazio. Adicione uma senha acima.</p>';
+            if (window.diaryEntries.length === 0) {
+                list.innerHTML = '<p class="text-xl text-gray-500 italic p-4 text-center">Seu caderno está vazio. Adicione uma nova senha no formulário acima.</p>';
                 return;
             }
 
-            diaryEntries.forEach(entry => {
+            window.diaryEntries.forEach(entry => {
                 const item = document.createElement('div');
-                item.className = 'bg-gray-50 dark:bg-gray-700 p-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4';
+                item.className = 'bg-gray-50 dark:bg-gray-700 p-4 sm:p-5 border-2 border-gray-200 dark:border-gray-600 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4';
                 
                 item.innerHTML = `
                     <div class="flex-grow space-y-1">
@@ -683,52 +621,259 @@
                         <button onclick="togglePasswordVisibility(this)" class="flex-1 md:flex-none bg-blue-100 text-blue-800 px-4 py-3 rounded-lg font-bold hover:bg-blue-200 border border-blue-300">
                             <i class="fas fa-eye"></i> Ver
                         </button>
-                        <button onclick="deleteEntry(${entry.id})" class="flex-1 md:flex-none bg-red-100 text-red-800 px-4 py-3 rounded-lg font-bold hover:bg-red-200 border border-red-300">
+                        <button onclick="window.deleteEntry('${entry.id}')" class="flex-1 md:flex-none bg-red-100 text-red-800 px-4 py-3 rounded-lg font-bold hover:bg-red-200 border border-red-300">
                             <i class="fas fa-trash"></i> Apagar
                         </button>
                     </div>
                 `;
                 list.appendChild(item);
             });
-        }
+        };
 
-        // Deixa a função global para o onclick inline funcionar
         window.togglePasswordVisibility = function(btn) {
             const container = btn.closest('div').previousElementSibling;
             const mask = container.querySelector('.password-mask');
             const text = container.querySelector('.password-text');
-            const icon = btn.querySelector('i');
 
             if (mask.classList.contains('hidden')) {
-                // Esconde
                 mask.classList.remove('hidden');
                 text.classList.add('hidden');
-                icon.className = 'fas fa-eye';
                 btn.innerHTML = '<i class="fas fa-eye"></i> Ver';
             } else {
-                // Mostra
                 mask.classList.add('hidden');
                 text.classList.remove('hidden');
-                icon.className = 'fas fa-eye-slash';
                 btn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar';
             }
         };
 
-        window.deleteEntry = function(id) {
-            // Em vez de window.confirm (bloqueado pelas regras), apagamos direto e mostramos aviso.
-            diaryEntries = diaryEntries.filter(e => e.id !== id);
-            renderEntries();
-            showMessage("Apagado", "A anotação foi apagada do seu caderninho.", "info");
-        };
-
-        // Inicializa garantindo que todos os modais de mensagens estejam ocultos
         document.addEventListener('DOMContentLoaded', () => {
-            // Evitar zoom indesejado ao dar duplo toque em inputs no mobile (comum em idosos)
             document.addEventListener('dblclick', function(event) {
                 event.preventDefault();
             }, { passive: false });
         });
+    </script>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'facilita-brasil-app';
+        let firebaseConfig = null;
+        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+            try {
+                firebaseConfig = JSON.parse(__firebase_config);
+            } catch (e) {
+                console.warn("Sem configuração do Firebase, usando modo local.", e);
+            }
+        }
+
+        let app, db, auth, currentUserId;
+        let isLocalMode = false;
+
+        if (firebaseConfig && firebaseConfig.apiKey) {
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                initFirebaseAuth();
+            } catch (e) {
+                console.warn("Iniciando em modo local devido a falha de conexão:", e);
+                initLocalFallback();
+            }
+        } else {
+            initLocalFallback();
+        }
+
+        async function initFirebaseAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                auth.onAuthStateChanged(async (user) => {
+                    if (user) {
+                        currentUserId = user.uid;
+                        await checkUserProfileFirebase();
+                    }
+                });
+            } catch (error) {
+                console.warn("Erro ao autenticar com Firebase, fallback para modo local.", error);
+                initLocalFallback();
+            }
+        }
+
+        async function checkUserProfileFirebase() {
+            if(!currentUserId) return;
+            try {
+                // Modificado para 4 segmentos: artifacts/{appId}/users/{currentUserId}
+                const profileRef = doc(db, 'artifacts', appId, 'users', currentUserId);
+                const docSnap = await getDoc(profileRef);
+                setupLoginUI(docSnap.exists() ? docSnap.data() : null);
+            } catch (e) {
+                console.warn("Erro Firestore doc, mudando para local:", e);
+                initLocalFallback();
+            }
+        }
+
+        function initLocalFallback() {
+            isLocalMode = true;
+            currentUserId = 'user_local_session';
+            const storedProfile = JSON.parse(localStorage.getItem('facilita_user_profile') || 'null');
+            setupLoginUI(storedProfile);
+        }
+
+        function setupLoginUI(existingProfile) {
+            const formGroup = document.getElementById('loginFormGroup');
+            const nameGroup = document.getElementById('nameFieldGroup');
+            const title = document.getElementById('loginTitle');
+            const subtitle = document.getElementById('loginSubtitle');
+            const btn = document.getElementById('btnLoginAction');
+            const usernameInput = document.getElementById('regUsername');
+
+            formGroup.classList.remove('hidden');
+
+            if (existingProfile) {
+                window.userProfile = existingProfile;
+                title.innerText = `Olá, ${window.userProfile.name}!`;
+                subtitle.innerText = "Digite sua senha de acesso para continuar.";
+                nameGroup.style.display = 'none'; 
+                usernameInput.value = window.userProfile.username;
+                usernameInput.disabled = true; 
+                
+                btn.innerText = "Acessar Portal";
+                btn.onclick = loginExistingUser;
+            } else {
+                title.innerText = "Seu Acesso Seguro";
+                subtitle.innerText = "Crie sua conta para guardar suas senhas e acessar o portal.";
+                nameGroup.style.display = 'block';
+                usernameInput.disabled = false;
+                
+                btn.innerText = "Criar Acesso e Entrar";
+                btn.onclick = registerNewUser;
+            }
+        }
+
+        async function registerNewUser() {
+            const name = document.getElementById('regName').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+
+            if(!name || !username || !password) {
+                window.showMessage("Atenção", "Preencha todos os campos (Nome, Usuário e Senha).", "error");
+                return;
+            }
+
+            const profileData = { name, username, password };
+            window.userProfile = profileData;
+
+            if (!isLocalMode && db && currentUserId) {
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'users', currentUserId), profileData);
+                } catch(e) {
+                    console.warn("Erro ao gravar na nuvem, usando local:", e);
+                }
+            }
+            
+            localStorage.setItem('facilita_user_profile', JSON.stringify(profileData));
+            closeLoginScreen();
+            loadPasswords();
+        }
+
+        async function loginExistingUser() {
+            const password = document.getElementById('regPassword').value.trim();
+            
+            if(window.userProfile && password === window.userProfile.password) {
+                closeLoginScreen();
+                loadPasswords();
+            } else {
+                window.showMessage("Atenção", "Senha incorreta. Verifique e tente novamente.", "error");
+            }
+        }
+
+        function closeLoginScreen() {
+            const screen = document.getElementById('globalLoginScreen');
+            document.getElementById('userGreeting').innerText = `| Olá, ${window.userProfile.name}`;
+            screen.style.opacity = '0';
+            setTimeout(() => {
+                screen.style.display = 'none';
+            }, 500);
+        }
+
+        function loadPasswords() {
+            if (!isLocalMode && db && currentUserId) {
+                const diaryRef = collection(db, 'artifacts', appId, 'users', currentUserId, 'passwords');
+                onSnapshot(diaryRef, (snapshot) => {
+                    window.diaryEntries = [];
+                    snapshot.forEach((doc) => {
+                        window.diaryEntries.push({ id: doc.id, ...doc.data() });
+                    });
+                    if(window.renderEntries) window.renderEntries();
+                }, (error) => {
+                    console.warn("Erro ao ouvir coleção na nuvem:", error);
+                    loadLocalPasswords();
+                });
+            } else {
+                loadLocalPasswords();
+            }
+        }
+
+        function loadLocalPasswords() {
+            window.diaryEntries = JSON.parse(localStorage.getItem('facilita_passwords') || '[]');
+            if(window.renderEntries) window.renderEntries();
+        }
+
+        window.addDiaryEntry = async function() {
+            const site = document.getElementById('entrySite').value.trim();
+            const login = document.getElementById('entryLogin').value.trim();
+            const password = document.getElementById('entryPassword').value.trim();
+
+            if (!site || !login || !password) {
+                window.showMessage("Atenção", "Preencha todos os campos antes de salvar.", "error");
+                return;
+            }
+
+            const newEntry = { site, login, password, createdAt: new Date().toISOString() };
+
+            if (!isLocalMode && db && currentUserId) {
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'users', currentUserId, 'passwords'), newEntry);
+                } catch(e) {
+                    console.warn("Falha ao salvar na nuvem, salvando localmente:", e);
+                    saveLocalEntry(newEntry);
+                }
+            } else {
+                saveLocalEntry(newEntry);
+            }
+
+            document.getElementById('entrySite').value = '';
+            document.getElementById('entryLogin').value = '';
+            document.getElementById('entryPassword').value = '';
+            window.showMessage("Salvo!", "Sua senha foi guardada com sucesso.", "success");
+        };
+
+        function saveLocalEntry(entry) {
+            entry.id = 'loc_' + Date.now();
+            window.diaryEntries.push(entry);
+            localStorage.setItem('facilita_passwords', JSON.stringify(window.diaryEntries));
+            if(window.renderEntries) window.renderEntries();
+        }
+
+        window.deleteEntry = async function(docId) {
+            if (!isLocalMode && db && currentUserId && !docId.startsWith('loc_')) {
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'users', currentUserId, 'passwords', docId));
+                } catch(e) {
+                    console.warn("Erro ao apagar na nuvem:", e);
+                }
+            }
+            window.diaryEntries = window.diaryEntries.filter(e => e.id !== docId);
+            localStorage.setItem('facilita_passwords', JSON.stringify(window.diaryEntries));
+            if(window.renderEntries) window.renderEntries();
+            window.showMessage("Apagado", "A senha foi removida do caderno.", "info");
+        };
     </script>
 </body>
 </html>
